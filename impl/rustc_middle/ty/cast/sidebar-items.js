@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"enum":[["CastKind","Cast Kind. See RFC 401 (or rustc_hir_analysis/check/cast.rs)."],["CastTy",""],["IntTy","Types that are represented as ints."]]};

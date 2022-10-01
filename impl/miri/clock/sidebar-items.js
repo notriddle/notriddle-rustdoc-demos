@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"constant":[["NANOSECONDS_PER_BASIC_BLOCK","When using a virtual clock, this defines how many nanoseconds we pretend are passing for each basic block."]],"enum":[["ClockKind",""],["InstantKind",""]],"struct":[["Clock","A monotone clock used for `Instant` simulation."],["Instant",""]]};
