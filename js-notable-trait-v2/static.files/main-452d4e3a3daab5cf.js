@@ -897,7 +897,9 @@ function loadCss(cssUrl) {
             !elemIsInParent(document.activeElement, window.CURRENT_NOTABLE_ELEMENT.NOTABLE_BASE) &&
             !elemIsInParent(event.relatedTarget, window.CURRENT_NOTABLE_ELEMENT.NOTABLE_BASE)
         ) {
-            hideNotable();
+            // iOS dispatches blur before click, while Firefox dispatches afterward
+            // work around discrepancy
+            setTimeout(hideNotable, 0);
         }
     }
 
