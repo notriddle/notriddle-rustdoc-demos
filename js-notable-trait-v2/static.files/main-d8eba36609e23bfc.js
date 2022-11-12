@@ -873,7 +873,7 @@ function loadCss(cssUrl) {
         } else {
             wrapper.style.setProperty(
                 "--popover-arrow-offset",
-                (wrapperPos.right - pos.right + 5) + "px"
+                (wrapperPos.right - pos.right + 24) + "px"
             );
         }
         wrapper.style.visibility = "";
@@ -897,9 +897,7 @@ function loadCss(cssUrl) {
             !elemIsInParent(document.activeElement, window.CURRENT_NOTABLE_ELEMENT.NOTABLE_BASE) &&
             !elemIsInParent(event.relatedTarget, window.CURRENT_NOTABLE_ELEMENT.NOTABLE_BASE)
         ) {
-            // iOS dispatches blur before click, while Firefox dispatches afterward
-            // work around discrepancy
-            setTimeout(hideNotable, 0);
+            hideNotable();
         }
     }
 

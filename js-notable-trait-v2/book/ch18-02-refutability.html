@@ -185,19 +185,19 @@ use a refutable pattern where an irrefutable pattern is required:</p>
 <pre><code class="language-console">$ cargo run
    Compiling patterns v0.1.0 (file:///projects/patterns)
 error[E0005]: refutable pattern in local binding: `None` not covered
-   --&gt; src/main.rs:3:9
-    |
-3   |     let Some(x) = some_option_value;
-    |         ^^^^^^^ pattern `None` not covered
-    |
-    = note: `let` bindings require an &quot;irrefutable pattern&quot;, like a `struct` or an `enum` with only one variant
-    = note: for more information, visit https://doc.rust-lang.org/book/ch18-02-refutability.html
+ --&gt; src/main.rs:3:9
+  |
+3 |     let Some(x) = some_option_value;
+  |         ^^^^^^^ pattern `None` not covered
+  |
+  = note: `let` bindings require an &quot;irrefutable pattern&quot;, like a `struct` or an `enum` with only one variant
+  = note: for more information, visit https://doc.rust-lang.org/book/ch18-02-refutability.html
 note: `Option&lt;i32&gt;` defined here
-    = note: the matched value is of type `Option&lt;i32&gt;`
+  = note: the matched value is of type `Option&lt;i32&gt;`
 help: you might want to use `if let` to ignore the variant that isn't matched
-    |
-3   |     let x = if let Some(x) = some_option_value { x } else { todo!() };
-    |     ++++++++++                                 ++++++++++++++++++++++
+  |
+3 |     let x = if let Some(x) = some_option_value { x } else { todo!() };
+  |     ++++++++++                                 ++++++++++++++++++++++
 
 For more information about this error, try `rustc --explain E0005`.
 error: could not compile `patterns` due to previous error

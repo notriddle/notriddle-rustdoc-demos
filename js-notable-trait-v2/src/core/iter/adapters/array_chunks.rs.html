@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `library/core/src/iter/adapters/array_chunks.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>array_chunks.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceSerif4-Regular-1f7d512b176f0f72.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceSerif4-Bold-124a1ca42af929b6.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../../static.files/rustdoc-36468869ec48571b.css" id="mainThemeStyle"><link rel="stylesheet" id="themeStyle" href="../../../../static.files/light-98c0ebf02d140783.css"><link rel="stylesheet" disabled href="../../../../static.files/dark-46b2656921470ad6.css"><link rel="stylesheet" disabled href="../../../../static.files/ayu-8e27f0d29a45e164.css"><script id="default-settings" ></script><script src="../../../../static.files/storage-d43fa987303ecbbb.js"></script><script defer src="../../../../static.files/source-script-74087aa2e88f4475.js"></script><script defer src="../../../../source-files1.67.0.js"></script><script defer src="../../../../static.files/main-452d4e3a3daab5cf.js"></script><noscript><link rel="stylesheet" href="../../../../static.files/noscript-13285aec31fa243e.css"></noscript><link rel="alternate icon" type="image/png" href="../../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><div class="width-limiter"><nav class="sub"><a class="sub-logo-container" href="../../../../core/index.html"><img class="rust-logo" src="../../../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../../static.files/wheel-5ec35bf9ca753509.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><span id="1">1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `library/core/src/iter/adapters/array_chunks.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>array_chunks.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceSerif4-Regular-1f7d512b176f0f72.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceSerif4-Bold-124a1ca42af929b6.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../../static.files/rustdoc-ab80635a7857b61c.css" id="mainThemeStyle"><link rel="stylesheet" id="themeStyle" href="../../../../static.files/light-92501962e11dab74.css"><link rel="stylesheet" disabled href="../../../../static.files/dark-d06bb2f91c9aa13b.css"><link rel="stylesheet" disabled href="../../../../static.files/ayu-0d8a72e6f6297723.css"><script id="default-settings" ></script><script src="../../../../static.files/storage-d43fa987303ecbbb.js"></script><script defer src="../../../../static.files/source-script-74087aa2e88f4475.js"></script><script defer src="../../../../source-files1.67.0.js"></script><script defer src="../../../../static.files/main-d8eba36609e23bfc.js"></script><noscript><link rel="stylesheet" href="../../../../static.files/noscript-13285aec31fa243e.css"></noscript><link rel="alternate icon" type="image/png" href="../../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><div class="width-limiter"><nav class="sub"><a class="sub-logo-container" href="../../../../core/index.html"><img class="rust-logo" src="../../../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../../static.files/wheel-5ec35bf9ca753509.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><span id="1">1</span>
 <span id="2">2</span>
 <span id="3">3</span>
 <span id="4">4</span>
@@ -168,9 +168,80 @@
 <span id="168">168</span>
 <span id="169">169</span>
 <span id="170">170</span>
+<span id="171">171</span>
+<span id="172">172</span>
+<span id="173">173</span>
+<span id="174">174</span>
+<span id="175">175</span>
+<span id="176">176</span>
+<span id="177">177</span>
+<span id="178">178</span>
+<span id="179">179</span>
+<span id="180">180</span>
+<span id="181">181</span>
+<span id="182">182</span>
+<span id="183">183</span>
+<span id="184">184</span>
+<span id="185">185</span>
+<span id="186">186</span>
+<span id="187">187</span>
+<span id="188">188</span>
+<span id="189">189</span>
+<span id="190">190</span>
+<span id="191">191</span>
+<span id="192">192</span>
+<span id="193">193</span>
+<span id="194">194</span>
+<span id="195">195</span>
+<span id="196">196</span>
+<span id="197">197</span>
+<span id="198">198</span>
+<span id="199">199</span>
+<span id="200">200</span>
+<span id="201">201</span>
+<span id="202">202</span>
+<span id="203">203</span>
+<span id="204">204</span>
+<span id="205">205</span>
+<span id="206">206</span>
+<span id="207">207</span>
+<span id="208">208</span>
+<span id="209">209</span>
+<span id="210">210</span>
+<span id="211">211</span>
+<span id="212">212</span>
+<span id="213">213</span>
+<span id="214">214</span>
+<span id="215">215</span>
+<span id="216">216</span>
+<span id="217">217</span>
+<span id="218">218</span>
+<span id="219">219</span>
+<span id="220">220</span>
+<span id="221">221</span>
+<span id="222">222</span>
+<span id="223">223</span>
+<span id="224">224</span>
+<span id="225">225</span>
+<span id="226">226</span>
+<span id="227">227</span>
+<span id="228">228</span>
+<span id="229">229</span>
+<span id="230">230</span>
+<span id="231">231</span>
+<span id="232">232</span>
+<span id="233">233</span>
+<span id="234">234</span>
+<span id="235">235</span>
+<span id="236">236</span>
+<span id="237">237</span>
+<span id="238">238</span>
+<span id="239">239</span>
 </pre><pre class="rust"><code><span class="kw">use </span><span class="kw">crate</span>::array;
-<span class="kw">use </span><span class="kw">crate</span>::iter::{ByRefSized, FusedIterator, Iterator};
-<span class="kw">use </span><span class="kw">crate</span>::ops::{ControlFlow, Try};
+<span class="kw">use </span><span class="kw">crate</span>::const_closure::ConstFnMutClosure;
+<span class="kw">use </span><span class="kw">crate</span>::iter::{ByRefSized, FusedIterator, Iterator, TrustedRandomAccessNoCoerce};
+<span class="kw">use </span><span class="kw">crate</span>::mem::{<span class="self">self</span>, MaybeUninit};
+<span class="kw">use </span><span class="kw">crate</span>::ops::{ControlFlow, NeverShortCircuit, Try};
 
 <span class="doccomment">/// An iterator over `N` elements of the iterator at a time.
 ///
@@ -252,7 +323,13 @@
         }
     }
 
-    <span class="macro">impl_fold_via_try_fold! </span>{ fold -&gt; try_fold }
+    <span class="kw">fn </span>fold&lt;B, F&gt;(<span class="self">self</span>, init: B, f: F) -&gt; B
+    <span class="kw">where
+        </span><span class="self">Self</span>: Sized,
+        F: FnMut(B, <span class="self">Self</span>::Item) -&gt; B,
+    {
+        &lt;<span class="self">Self </span><span class="kw">as </span>SpecFold&gt;::fold(<span class="self">self</span>, init, f)
+    }
 }
 
 <span class="attr">#[unstable(feature = <span class="string">&quot;iter_array_chunks&quot;</span>, reason = <span class="string">&quot;recently added&quot;</span>, issue = <span class="string">&quot;100450&quot;</span>)]
@@ -336,6 +413,67 @@
     <span class="attr">#[inline]
     </span><span class="kw">fn </span>is_empty(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
         <span class="self">self</span>.iter.len() &lt; N
+    }
+}
+
+<span class="kw">trait </span>SpecFold: Iterator {
+    <span class="kw">fn </span>fold&lt;B, F&gt;(<span class="self">self</span>, init: B, f: F) -&gt; B
+    <span class="kw">where
+        </span><span class="self">Self</span>: Sized,
+        F: FnMut(B, <span class="self">Self</span>::Item) -&gt; B;
+}
+
+<span class="kw">impl</span>&lt;I, <span class="kw">const </span>N: usize&gt; SpecFold <span class="kw">for </span>ArrayChunks&lt;I, N&gt;
+<span class="kw">where
+    </span>I: Iterator,
+{
+    <span class="attr">#[inline]
+    </span>default <span class="kw">fn </span>fold&lt;B, F&gt;(<span class="kw-2">mut </span><span class="self">self</span>, init: B, <span class="kw-2">mut </span>f: F) -&gt; B
+    <span class="kw">where
+        </span><span class="self">Self</span>: Sized,
+        F: FnMut(B, <span class="self">Self</span>::Item) -&gt; B,
+    {
+        <span class="kw">let </span>fold = ConstFnMutClosure::new(<span class="kw-2">&amp;mut </span>f, NeverShortCircuit::wrap_mut_2_imp);
+        <span class="self">self</span>.try_fold(init, fold).<span class="number">0
+    </span>}
+}
+
+<span class="kw">impl</span>&lt;I, <span class="kw">const </span>N: usize&gt; SpecFold <span class="kw">for </span>ArrayChunks&lt;I, N&gt;
+<span class="kw">where
+    </span>I: Iterator + TrustedRandomAccessNoCoerce,
+{
+    <span class="attr">#[inline]
+    </span><span class="kw">fn </span>fold&lt;B, F&gt;(<span class="kw-2">mut </span><span class="self">self</span>, init: B, <span class="kw-2">mut </span>f: F) -&gt; B
+    <span class="kw">where
+        </span><span class="self">Self</span>: Sized,
+        F: FnMut(B, <span class="self">Self</span>::Item) -&gt; B,
+    {
+        <span class="kw">let </span><span class="kw-2">mut </span>accum = init;
+        <span class="kw">let </span>inner_len = <span class="self">self</span>.iter.size();
+        <span class="kw">let </span><span class="kw-2">mut </span>i = <span class="number">0</span>;
+        <span class="comment">// Use a while loop because (0..len).step_by(N) doesn&#39;t optimize well.
+        </span><span class="kw">while </span>inner_len - i &gt;= N {
+            <span class="kw">let </span><span class="kw-2">mut </span>chunk = MaybeUninit::uninit_array();
+            <span class="kw">let </span><span class="kw-2">mut </span>guard = array::Guard { array_mut: <span class="kw-2">&amp;mut </span>chunk, initialized: <span class="number">0 </span>};
+            <span class="kw">while </span>guard.initialized &lt; N {
+                <span class="comment">// SAFETY: The method consumes the iterator and the loop condition ensures that
+                // all accesses are in bounds and only happen once.
+                </span><span class="kw">unsafe </span>{
+                    <span class="kw">let </span>idx = i + guard.initialized;
+                    guard.push_unchecked(<span class="self">self</span>.iter.__iterator_get_unchecked(idx));
+                }
+            }
+            mem::forget(guard);
+            <span class="comment">// SAFETY: The loop above initialized all elements
+            </span><span class="kw">let </span>chunk = <span class="kw">unsafe </span>{ MaybeUninit::array_assume_init(chunk) };
+            accum = f(accum, chunk);
+            i += N;
+        }
+
+        <span class="comment">// unlike try_fold this method does not need to take care of the remainder
+        // since `self` will be dropped
+
+        </span>accum
     }
 }
 </code></pre></div>

@@ -147,7 +147,8 @@
                 <div id="content" class="content">
                     <main>
                         <h1 id="error-code-e0207"><a class="header" href="#error-code-e0207">Error code E0207</a></h1>
-<p>A type parameter that is specified for <code>impl</code> is not constrained.</p>
+<p>A type, const or lifetime parameter that is specified for <code>impl</code> is not
+constrained.</p>
 <p>Erroneous code example:</p>
 <pre><pre class="playground"><code class="language-rust compile_fail E0207"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -162,14 +163,16 @@ impl&lt;T: Default&gt; Foo {
 }
 <span class="boring">}
 </span></code></pre></pre>
-<p>Any type parameter of an <code>impl</code> must meet at least one of
-the following criteria:</p>
+<p>Any type or const parameter of an <code>impl</code> must meet at least one of the
+following criteria:</p>
 <ul>
 <li>it appears in the <em>implementing type</em> of the impl, e.g. <code>impl&lt;T&gt; Foo&lt;T&gt;</code></li>
 <li>for a trait impl, it appears in the <em>implemented trait</em>, e.g.
 <code>impl&lt;T&gt; SomeTrait&lt;T&gt; for Foo</code></li>
 <li>it is bound as an associated type, e.g. <code>impl&lt;T, U&gt; SomeTrait for T where T: AnotherTrait&lt;AssocType=U&gt;</code></li>
 </ul>
+<p>Any unconstrained lifetime parameter of an <code>impl</code> is not supported if the
+lifetime parameter is used by an associated type.</p>
 <h3 id="error-example-1"><a class="header" href="#error-example-1">Error example 1</a></h3>
 <p>Suppose we have a struct <code>Foo</code> and we would like to define some methods for it.
 The previous code example has a definition which leads to a compiler error:</p>
@@ -270,6 +273,66 @@ impl&lt;T: Default&gt; Maker&lt;Foo&lt;T&gt;&gt; for FooMaker {
 }
 <span class="boring">}
 </span></code></pre></pre>
+<h3 id="error-example-3"><a class="header" href="#error-example-3">Error example 3</a></h3>
+<p>Suppose we have a struct <code>Foo</code> and we would like to define some methods for it.
+The following code example has a definition which leads to a compiler error:</p>
+<pre><pre class="playground"><code class="language-rust compile_fail E0207"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>struct Foo;
+
+impl&lt;const T: i32&gt; Foo {
+    // error: the const parameter `T` is not constrained by the impl trait, self
+    // type, or predicates [E0207]
+    fn get(&amp;self) -&gt; i32 {
+        i32::default()
+    }
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>The problem is that the const parameter <code>T</code> does not appear in the implementing
+type (<code>Foo</code>) of the impl. In this case, we can fix the error by moving the type
+parameter from the <code>impl</code> to the method <code>get</code>:</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>struct Foo;
+
+// Move the const parameter from the impl to the method
+impl Foo {
+    fn get&lt;const T: i32&gt;(&amp;self) -&gt; i32 {
+        i32::default()
+    }
+}
+<span class="boring">}
+</span></code></pre></pre>
+<h3 id="error-example-4"><a class="header" href="#error-example-4">Error example 4</a></h3>
+<p>Suppose we have a struct <code>Foo</code> and a struct <code>Bar</code> that uses lifetime <code>'a</code>. We
+would like to implement trait <code>Contains</code> for <code>Foo</code>. The trait <code>Contains</code> have
+the associated type <code>B</code>. The following code example has a definition which
+leads to a compiler error:</p>
+<pre><pre class="playground"><code class="language-rust compile_fail E0207"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>struct Foo;
+struct Bar&lt;'a&gt;;
+
+trait Contains {
+    type B;
+
+    fn get(&amp;self) -&gt; i32;
+}
+
+impl&lt;'a&gt; Contains for Foo {
+    type B = Bar&lt;'a&gt;;
+
+    // error: the lifetime parameter `'a` is not constrained by the impl trait,
+    // self type, or predicates [E0207]
+    fn get(&amp;self) -&gt; i32 {
+        i32::default()
+    }
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>Please note that unconstrained lifetime parameters are not supported if they are
+being used by an associated type.</p>
 <h3 id="additional-information"><a class="header" href="#additional-information">Additional information</a></h3>
 <p>For more information, please see <a href="https://github.com/rust-lang/rfcs/blob/master/text/0447-no-unused-impl-parameters.md">RFC 447</a>.</p>
 

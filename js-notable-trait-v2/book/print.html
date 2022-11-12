@@ -150,7 +150,7 @@
                     <main>
                         <h1 id="the-rust-programming-language"><a class="header" href="#the-rust-programming-language">The Rust Programming Language</a></h1>
 <p><em>by Steve Klabnik and Carol Nichols, with contributions from the Rust Community</em></p>
-<p>This version of the text assumes you’re using Rust 1.62 (released 2022-06-30)
+<p>This version of the text assumes you’re using Rust 1.65 (released 2022-11-03)
 or later. See the <a href="ch01-01-installation.html">“Installation” section of Chapter 1</a><!-- ignore -->
 to install or update Rust.</p>
 <p>The HTML format is available online at
@@ -1477,10 +1477,13 @@ error[E0308]: mismatched types
   --&gt; src/main.rs:22:21
    |
 22 |     match guess.cmp(&amp;secret_number) {
-   |                     ^^^^^^^^^^^^^^ expected struct `String`, found integer
+   |                 --- ^^^^^^^^^^^^^^ expected struct `String`, found integer
+   |                 |
+   |                 arguments to this function are incorrect
    |
    = note: expected reference `&amp;String`
               found reference `&amp;{integer}`
+note: associated function defined here
 
 For more information about this error, try `rustc --explain E0308`.
 error: could not compile `guessing_game` due to previous error
@@ -2120,7 +2123,12 @@ error[E0282]: type annotations needed
  --&gt; src/main.rs:2:9
   |
 2 |     let guess = &quot;42&quot;.parse().expect(&quot;Not a number!&quot;);
-  |         ^^^^^ consider giving `guess` a type
+  |         ^^^^^
+  |
+help: consider giving `guess` an explicit type
+  |
+2 |     let guess: _ = &quot;42&quot;.parse().expect(&quot;Not a number!&quot;);
+  |              +++
 
 For more information about this error, try `rustc --explain E0282`.
 error: could not compile `no_type_annotations` due to previous error
@@ -2596,6 +2604,12 @@ to another variable, as the following code tries to do; you’ll get an error:</
 <p>When you run this program, the error you’ll get looks like this:</p>
 <pre><code class="language-console">$ cargo run
    Compiling functions v0.1.0 (file:///projects/functions)
+error: expected expression, found `let` statement
+ --&gt; src/main.rs:2:14
+  |
+2 |     let x = (let y = 6);
+  |              ^^^
+
 error: expected expression, found statement (`let`)
  --&gt; src/main.rs:2:14
   |
@@ -2623,11 +2637,11 @@ help: remove these parentheses
   |
 2 -     let x = (let y = 6);
 2 +     let x = let y = 6;
-  | 
+  |
 
 For more information about this error, try `rustc --explain E0658`.
 warning: `functions` (bin &quot;functions&quot;) generated 1 warning
-error: could not compile `functions` due to 2 previous errors; 1 warning emitted
+error: could not compile `functions` due to 3 previous errors; 1 warning emitted
 </code></pre>
 <p>The <code>let y = 6</code> statement does not return a value, so there isn’t anything for
 <code>x</code> to bind to. This is different from what happens in other languages, such as
@@ -3547,11 +3561,11 @@ error[E0382]: borrow of moved value: `s1`
   |         -- move occurs because `s1` has type `String`, which does not implement the `Copy` trait
 3 |     let s2 = s1;
   |              -- value moved here
-4 | 
+4 |
 5 |     println!(&quot;{}, world!&quot;, s1);
   |                            ^^ value borrowed here after move
   |
-  = note: this error originates in the macro `$crate::format_args_nl` (in Nightly builds, run with -Z macro-backtrace for more info)
+  = note: this error originates in the macro `$crate::format_args_nl` which comes from the expansion of the macro `println` (in Nightly builds, run with -Z macro-backtrace for more info)
 
 For more information about this error, try `rustc --explain E0382`.
 error: could not compile `ownership` due to previous error
@@ -3887,7 +3901,7 @@ error[E0499]: cannot borrow `s` as mutable more than once at a time
   |              ------ first mutable borrow occurs here
 5 |     let r2 = &amp;mut s;
   |              ^^^^^^ second mutable borrow occurs here
-6 | 
+6 |
 7 |     println!(&quot;{}, {}&quot;, r1, r2);
   |                        -- first borrow later used here
 
@@ -3948,7 +3962,7 @@ error[E0502]: cannot borrow `s` as mutable because it is also borrowed as immuta
 5 |     let r2 = &amp;s; // no problem
 6 |     let r3 = &amp;mut s; // BIG PROBLEM
   |              ^^^^^^ mutable borrow occurs here
-7 | 
+7 |
 8 |     println!(&quot;{}, {}, and {}&quot;, r1, r2, r3);
   |                                -- immutable borrow later used here
 
@@ -4020,7 +4034,7 @@ error[E0106]: missing lifetime specifier
 help: consider using the `'static` lifetime
   |
 5 | fn dangle() -&gt; &amp;'static String {
-  |                ~~~~~~~~
+  |                 +++++++
 
 For more information about this error, try `rustc --explain E0106`.
 error: could not compile `ownership` due to previous error
@@ -4346,10 +4360,10 @@ error[E0502]: cannot borrow `s` as mutable because it is also borrowed as immuta
    |
 16 |     let word = first_word(&amp;s);
    |                           -- immutable borrow occurs here
-17 | 
+17 |
 18 |     s.clear(); // error!
    |     ^^^^^^^^^ mutable borrow occurs here
-19 | 
+19 |
 20 |     println!(&quot;the first word is: {}&quot;, word);
    |                                       ---- immutable borrow later used here
 
@@ -4504,7 +4518,7 @@ a better way to group data.</p>
 define associated functions, especially the kind of associated functions called
 <em>methods</em>, to specify behavior associated with a struct type. Structs and enums
 (discussed in Chapter 6) are the building blocks for creating new types in your
-program’s domain to take full advantage of Rust’s compile time type checking.</p>
+program’s domain to take full advantage of Rust’s compile-time type checking.</p>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="defining-and-instantiating-structs"><a class="header" href="#defining-and-instantiating-structs">Defining and Instantiating Structs</a></h2>
 <p>Structs are similar to tuples, discussed in <a href="ch03-02-data-types.html#the-tuple-type">“The Tuple Type”</a><!--
 ignore --> section, in that both hold multiple related values. Like tuples, the
@@ -4517,6 +4531,7 @@ struct’s name should describe the significance of the pieces of data being
 grouped together. Then, inside curly brackets, we define the names and types of
 the pieces of data, which we call <em>fields</em>. For example, Listing 5-1 shows a
 struct that stores information about a user account.</p>
+<p><span class="filename">Filename: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust">struct User {
     active: bool,
     username: String,
@@ -4529,12 +4544,14 @@ struct that stores information about a user account.</p>
 <p><span class="caption">Listing 5-1: A <code>User</code> struct definition</span></p>
 <p>To use a struct after we’ve defined it, we create an <em>instance</em> of that struct
 by specifying concrete values for each of the fields. We create an instance by
-stating the name of the struct and then add curly brackets containing <code>key: value</code> pairs, where the keys are the names of the fields and the values are the
+stating the name of the struct and then add curly brackets containing <em>key:
+value</em> pairs, where the keys are the names of the fields and the values are the
 data we want to store in those fields. We don’t have to specify the fields in
 the same order in which we declared them in the struct. In other words, the
 struct definition is like a general template for the type, and instances fill
 in that template with particular data to create values of the type. For
 example, we can declare a particular user as shown in Listing 5-2.</p>
+<p><span class="filename">Filename: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">struct User {
 </span><span class="boring">    active: bool,
 </span><span class="boring">    username: String,
@@ -4544,9 +4561,9 @@ example, we can declare a particular user as shown in Listing 5-2.</p>
 </span><span class="boring">
 </span>fn main() {
     let user1 = User {
-        email: String::from(&quot;someone@example.com&quot;),
-        username: String::from(&quot;someusername123&quot;),
         active: true,
+        username: String::from(&quot;someusername123&quot;),
+        email: String::from(&quot;someone@example.com&quot;),
         sign_in_count: 1,
     };
 }
@@ -4558,6 +4575,7 @@ access this user’s email address, we use <code>user1.email</code>. If the inst
 mutable, we can change a value by using the dot notation and assigning into a
 particular field. Listing 5-3 shows how to change the value in the <code>email</code>
 field of a mutable <code>User</code> instance.</p>
+<p><span class="filename">Filename: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">struct User {
 </span><span class="boring">    active: bool,
 </span><span class="boring">    username: String,
@@ -4567,9 +4585,9 @@ field of a mutable <code>User</code> instance.</p>
 </span><span class="boring">
 </span>fn main() {
     let mut user1 = User {
-        email: String::from(&quot;someone@example.com&quot;),
-        username: String::from(&quot;someusername123&quot;),
         active: true,
+        username: String::from(&quot;someusername123&quot;),
+        email: String::from(&quot;someone@example.com&quot;),
         sign_in_count: 1,
     };
 
@@ -4585,6 +4603,7 @@ implicitly return that new instance.</p>
 <p>Listing 5-4 shows a <code>build_user</code> function that returns a <code>User</code> instance with
 the given email and username. The <code>active</code> field gets the value of <code>true</code>, and
 the <code>sign_in_count</code> gets a value of <code>1</code>.</p>
+<p><span class="filename">Filename: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">struct User {
 </span><span class="boring">    active: bool,
 </span><span class="boring">    username: String,
@@ -4594,9 +4613,9 @@ the <code>sign_in_count</code> gets a value of <code>1</code>.</p>
 </span><span class="boring">
 </span>fn build_user(email: String, username: String) -&gt; User {
     User {
-        email: email,
-        username: username,
         active: true,
+        username: username,
+        email: email,
         sign_in_count: 1,
     }
 }
@@ -4614,12 +4633,14 @@ and username and returns a <code>User</code> instance</span></p>
 fields, but having to repeat the <code>email</code> and <code>username</code> field names and
 variables is a bit tedious. If the struct had more fields, repeating each name
 would get even more annoying. Luckily, there’s a convenient shorthand!</p>
+<!-- Old heading. Do not remove or links may break. -->
 <p><a id="using-the-field-init-shorthand-when-variables-and-fields-have-the-same-name"></a></p>
 <h3 id="using-the-field-init-shorthand"><a class="header" href="#using-the-field-init-shorthand">Using the Field Init Shorthand</a></h3>
 <p>Because the parameter names and the struct field names are exactly the same in
 Listing 5-4, we can use the <em>field init shorthand</em> syntax to rewrite
-<code>build_user</code> so that it behaves exactly the same but doesn’t have the
-repetition of <code>email</code> and <code>username</code>, as shown in Listing 5-5.</p>
+<code>build_user</code> so it behaves exactly the same but doesn’t have the repetition of
+<code>username</code> and <code>email</code>, as shown in Listing 5-5.</p>
+<p><span class="filename">Filename: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">struct User {
 </span><span class="boring">    active: bool,
 </span><span class="boring">    username: String,
@@ -4629,9 +4650,9 @@ repetition of <code>email</code> and <code>username</code>, as shown in Listing 
 </span><span class="boring">
 </span>fn build_user(email: String, username: String) -&gt; User {
     User {
-        email,
-        username,
         active: true,
+        username,
+        email,
         sign_in_count: 1,
     }
 }
@@ -4644,20 +4665,21 @@ repetition of <code>email</code> and <code>username</code>, as shown in Listing 
 </span><span class="boring">}
 </span></code></pre></pre>
 <p><span class="caption">Listing 5-5: A <code>build_user</code> function that uses field init
-shorthand because the <code>email</code> and <code>username</code> parameters have the same name as
+shorthand because the <code>username</code> and <code>email</code> parameters have the same name as
 struct fields</span></p>
 <p>Here, we’re creating a new instance of the <code>User</code> struct, which has a field
 named <code>email</code>. We want to set the <code>email</code> field’s value to the value in the
 <code>email</code> parameter of the <code>build_user</code> function. Because the <code>email</code> field and
 the <code>email</code> parameter have the same name, we only need to write <code>email</code> rather
 than <code>email: email</code>.</p>
-<h3 id="creating-instances-from-other-instances-with-struct-update-syntax"><a class="header" href="#creating-instances-from-other-instances-with-struct-update-syntax">Creating Instances From Other Instances With Struct Update Syntax</a></h3>
+<h3 id="creating-instances-from-other-instances-with-struct-update-syntax"><a class="header" href="#creating-instances-from-other-instances-with-struct-update-syntax">Creating Instances from Other Instances with Struct Update Syntax</a></h3>
 <p>It’s often useful to create a new instance of a struct that includes most of
 the values from another instance, but changes some. You can do this using
 <em>struct update syntax</em>.</p>
 <p>First, in Listing 5-6 we show how to create a new <code>User</code> instance in <code>user2</code>
 regularly, without the update syntax. We set a new value for <code>email</code> but
 otherwise use the same values from <code>user1</code> that we created in Listing 5-2.</p>
+<p><span class="filename">Filename: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">struct User {
 </span><span class="boring">    active: bool,
 </span><span class="boring">    username: String,
@@ -4688,6 +4710,7 @@ the values from <code>user1</code></span></p>
 <p>Using struct update syntax, we can achieve the same effect with less code, as
 shown in Listing 5-7. The syntax <code>..</code> specifies that the remaining fields not
 explicitly set should have the same value as the fields in the given instance.</p>
+<p><span class="filename">Filename: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">struct User {
 </span><span class="boring">    active: bool,
 </span><span class="boring">    username: String,
@@ -4712,7 +4735,7 @@ explicitly set should have the same value as the fields in the given instance.</
 }
 </code></pre></pre>
 <p><span class="caption">Listing 5-7: Using struct update syntax to set a new
-<code>email</code> value for a <code>User</code> instance but use the rest of the values from
+<code>email</code> value for a <code>User</code> instance but to use the rest of the values from
 <code>user1</code></span></p>
 <p>The code in Listing 5-7 also creates an instance in <code>user2</code> that has a
 different value for <code>email</code> but has the same values for the <code>username</code>,
@@ -4721,26 +4744,27 @@ to specify that any remaining fields should get their values from the
 corresponding fields in <code>user1</code>, but we can choose to specify values for as
 many fields as we want in any order, regardless of the order of the fields in
 the struct’s definition.</p>
-<p>Note that the struct update syntax uses <code>=</code> like an assignment; this is
-because it moves the data, just as we saw in the <a href="ch04-01-what-is-ownership.html#ways-variables-and-data-interact-move">“Ways Variables and Data
-Interact: Move”</a><!-- ignore --> section. In this example, we can no
-longer use <code>user1</code> after creating <code>user2</code> because the <code>String</code> in the
+<p>Note that the struct update syntax uses <code>=</code> like an assignment; this is because
+it moves the data, just as we saw in the <a href="ch04-01-what-is-ownership.html#variables-and-data-interacting-with-move">“Variables and Data Interacting with
+Move”</a><!-- ignore --> section. In this example, we can no longer use
+<code>user1</code> as a whole after creating <code>user2</code> because the <code>String</code> in the
 <code>username</code> field of <code>user1</code> was moved into <code>user2</code>. If we had given <code>user2</code> new
 <code>String</code> values for both <code>email</code> and <code>username</code>, and thus only used the
 <code>active</code> and <code>sign_in_count</code> values from <code>user1</code>, then <code>user1</code> would still be
-valid after creating <code>user2</code>. The types of <code>active</code> and <code>sign_in_count</code> are
-types that implement the <code>Copy</code> trait, so the behavior we discussed in the
-<a href="ch04-01-what-is-ownership.html#stack-only-data-copy">“Stack-Only Data: Copy”</a><!-- ignore --> section would apply.</p>
-<h3 id="using-tuple-structs-without-named-fields-to-create-different-types"><a class="header" href="#using-tuple-structs-without-named-fields-to-create-different-types">Using Tuple Structs without Named Fields to Create Different Types</a></h3>
-<p>Rust also supports structs that look similar to tuples, called <em>tuple
-structs</em>. Tuple structs have the added meaning the struct name provides but
-don’t have names associated with their fields; rather, they just have the types
-of the fields. Tuple structs are useful when you want to give the whole tuple a
-name and make the tuple a different type from other tuples, and when naming each
+valid after creating <code>user2</code>. Both <code>active</code> and <code>sign_in_count</code> are types that
+implement the <code>Copy</code> trait, so the behavior we discussed in the <a href="ch04-01-what-is-ownership.html#stack-only-data-copy">“Stack-Only
+Data: Copy”</a><!-- ignore --> section would apply.</p>
+<h3 id="using-tuple-structs-without-named-fields-to-create-different-types"><a class="header" href="#using-tuple-structs-without-named-fields-to-create-different-types">Using Tuple Structs Without Named Fields to Create Different Types</a></h3>
+<p>Rust also supports structs that look similar to tuples, called <em>tuple structs</em>.
+Tuple structs have the added meaning the struct name provides but don’t have
+names associated with their fields; rather, they just have the types of the
+fields. Tuple structs are useful when you want to give the whole tuple a name
+and make the tuple a different type from other tuples, and when naming each
 field as in a regular struct would be verbose or redundant.</p>
 <p>To define a tuple struct, start with the <code>struct</code> keyword and the struct name
-followed by the types in the tuple. For example, here we define and use
-two tuple structs named <code>Color</code> and <code>Point</code>:</p>
+followed by the types in the tuple. For example, here we define and use two
+tuple structs named <code>Color</code> and <code>Point</code>:</p>
+<p><span class="filename">Filename: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust">struct Color(i32, i32, i32);
 struct Point(i32, i32, i32);
 
@@ -4749,7 +4773,7 @@ fn main() {
     let origin = Point(0, 0, 0);
 }
 </code></pre></pre>
-<p>Note that the <code>black</code> and <code>origin</code> values are different types, because they’re
+<p>Note that the <code>black</code> and <code>origin</code> values are different types because they’re
 instances of different tuple structs. Each struct you define is its own type,
 even though the fields within the struct might have the same types. For
 example, a function that takes a parameter of type <code>Color</code> cannot take a
@@ -4765,14 +4789,15 @@ structs can be useful when you need to implement a trait on some type but don’
 have any data that you want to store in the type itself. We’ll discuss traits
 in Chapter 10. Here’s an example of declaring and instantiating a unit struct
 named <code>AlwaysEqual</code>:</p>
+<p><span class="filename">Filename: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust">struct AlwaysEqual;
 
 fn main() {
     let subject = AlwaysEqual;
 }
 </code></pre></pre>
-<p>To define <code>AlwaysEqual</code>, we use the <code>struct</code> keyword, the name we want, then a
-semicolon. No need for curly brackets or parentheses! Then we can get an
+<p>To define <code>AlwaysEqual</code>, we use the <code>struct</code> keyword, the name we want, and
+then a semicolon. No need for curly brackets or parentheses! Then we can get an
 instance of <code>AlwaysEqual</code> in the <code>subject</code> variable in a similar way: using the
 name we defined, without any curly brackets or parentheses. Imagine that later
 we’ll implement behavior for this type such that every instance of
@@ -4802,9 +4827,9 @@ in a struct without specifying lifetimes, like the following; this won’t work:
 
 fn main() {
     let user1 = User {
-        email: &quot;someone@example.com&quot;,
-        username: &quot;someusername123&quot;,
         active: true,
+        username: &quot;someusername123&quot;,
+        email: &quot;someone@example.com&quot;,
         sign_in_count: 1,
     };
 }
@@ -4965,8 +4990,8 @@ fn area(rectangle: &amp;Rectangle) -&gt; u32 {
 <p><span class="caption">Listing 5-10: Defining a <code>Rectangle</code> struct</span></p>
 <p>Here we’ve defined a struct and named it <code>Rectangle</code>. Inside the curly
 brackets, we defined the fields as <code>width</code> and <code>height</code>, both of which have
-type <code>u32</code>. Then in <code>main</code>, we created a particular instance of <code>Rectangle</code>
-that has a width of 30 and a height of 50.</p>
+type <code>u32</code>. Then, in <code>main</code>, we created a particular instance of <code>Rectangle</code>
+that has a width of <code>30</code> and a height of <code>50</code>.</p>
 <p>Our <code>area</code> function is now defined with one parameter, which we’ve named
 <code>rectangle</code>, whose type is an immutable borrow of a struct <code>Rectangle</code>
 instance. As mentioned in Chapter 4, we want to borrow the struct rather than
@@ -5009,7 +5034,7 @@ instance</span></p>
 <p>The <code>println!</code> macro can do many kinds of formatting, and by default, the curly
 brackets tell <code>println!</code> to use formatting known as <code>Display</code>: output intended
 for direct end user consumption. The primitive types we’ve seen so far
-implement <code>Display</code> by default, because there’s only one way you’d want to show
+implement <code>Display</code> by default because there’s only one way you’d want to show
 a <code>1</code> or any other primitive type to a user. But with structs, the way
 <code>println!</code> should format the output is less clear because there are more
 display possibilities: Do you want commas or not? Do you want to print the
@@ -5064,8 +5089,8 @@ rect1 is Rectangle { width: 30, height: 50 }
 <p>Nice! It’s not the prettiest output, but it shows the values of all the fields
 for this instance, which would definitely help during debugging. When we have
 larger structs, it’s useful to have output that’s a bit easier to read; in
-those cases, we can use <code>{:#?}</code> instead of <code>{:?}</code> in the <code>println!</code> string.
-In this example, using the <code>{:#?}</code> style will output:</p>
+those cases, we can use <code>{:#?}</code> instead of <code>{:?}</code> in the <code>println!</code> string. In
+this example, using the <code>{:#?}</code> style will output the following:</p>
 <pre><code class="language-console">$ cargo run
    Compiling rectangles v0.1.0 (file:///projects/rectangles)
     Finished dev [unoptimized + debuginfo] target(s) in 0.48s
@@ -5077,15 +5102,15 @@ rect1 is Rectangle {
 </code></pre>
 <p>Another way to print out a value using the <code>Debug</code> format is to use the <a href="../std/macro.dbg.html"><code>dbg!</code>
 macro</a><!-- ignore -->, which takes ownership of an expression (as opposed
-to <code>println!</code> that takes a reference), prints the file and line number of where
-that <code>dbg!</code> macro call occurs in your code along with the resulting value of
-that expression, and returns ownership of the value.</p>
+to <code>println!</code>, which takes a reference), prints the file and line number of
+where that <code>dbg!</code> macro call occurs in your code along with the resultant value
+of that expression, and returns ownership of the value.</p>
 <blockquote>
 <p>Note: Calling the <code>dbg!</code> macro prints to the standard error console stream
-(<code>stderr</code>), as opposed to <code>println!</code> which prints to the standard output
+(<code>stderr</code>), as opposed to <code>println!</code>, which prints to the standard output
 console stream (<code>stdout</code>). We’ll talk more about <code>stderr</code> and <code>stdout</code> in the
-<a href="ch12-06-writing-to-stderr-instead-of-stdout.html">“Writing Error Messages to Standard Error Instead of Standard
-Output” section in Chapter 12</a><!-- ignore -->.</p>
+<a href="ch12-06-writing-to-stderr-instead-of-stdout.html">“Writing Error Messages to Standard Error Instead of Standard Output”
+section in Chapter 12</a><!-- ignore -->.</p>
 </blockquote>
 <p>Here’s an example where we’re interested in the value that gets assigned to the
 <code>width</code> field, as well as the value of the whole struct in <code>rect1</code>:</p>
@@ -5120,8 +5145,8 @@ Here’s what the output of this example looks like:</p>
     height: 50,
 }
 </code></pre>
-<p>We can see the first bit of output came from <em>src/main.rs</em> line 10, where we’re
-debugging the expression <code>30 * scale</code>, and its resulting value is 60 (the
+<p>We can see the first bit of output came from <em>src/main.rs</em> line 10 where we’re
+debugging the expression <code>30 * scale</code>, and its resultant value is <code>60</code> (the
 <code>Debug</code> formatting implemented for integers is to print only their value). The
 <code>dbg!</code> call on line 14 of <em>src/main.rs</em> outputs the value of <code>&amp;rect1</code>, which is
 the <code>Rectangle</code> struct. This output uses the pretty <code>Debug</code> formatting of the
@@ -5135,18 +5160,19 @@ well as how to create your own traits in Chapter 10. There are also many
 attributes other than <code>derive</code>; for more information, see <a href="../reference/attributes.html">the “Attributes”
 section of the Rust Reference</a>.</p>
 <p>Our <code>area</code> function is very specific: it only computes the area of rectangles.
-It would be helpful to tie this behavior more closely to our <code>Rectangle</code>
-struct, because it won’t work with any other type. Let’s look at how we can
-continue to refactor this code by turning the <code>area</code> function into an <code>area</code>
-<em>method</em> defined on our <code>Rectangle</code> type.</p>
+It would be helpful to tie this behavior more closely to our <code>Rectangle</code> struct
+because it won’t work with any other type. Let’s look at how we can continue to
+refactor this code by turning the <code>area</code> function into an <code>area</code> <em>method</em>
+defined on our <code>Rectangle</code> type.</p>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="method-syntax"><a class="header" href="#method-syntax">Method Syntax</a></h2>
 <p><em>Methods</em> are similar to functions: we declare them with the <code>fn</code> keyword and a
 name, they can have parameters and a return value, and they contain some code
 that’s run when the method is called from somewhere else. Unlike functions,
 methods are defined within the context of a struct (or an enum or a trait
-object, which we cover in Chapters 6 and 17, respectively), and their first
-parameter is always <code>self</code>, which represents the instance of the struct the
-method is being called on.</p>
+object, which we cover in <a href="ch06-00-enums.html">Chapter 6</a><!-- ignore --> and <a href="ch17-02-trait-objects.html">Chapter
+17</a><!-- ignore -->, respectively), and their first parameter is
+always <code>self</code>, which represents the instance of the struct the method is being
+called on.</p>
 <h3 id="defining-methods"><a class="header" href="#defining-methods">Defining Methods</a></h3>
 <p>Let’s change the <code>area</code> function that has a <code>Rectangle</code> instance as a parameter
 and instead make an <code>area</code> method defined on the <code>Rectangle</code> struct, as shown
@@ -5193,23 +5219,27 @@ type <code>Self</code> is an alias for the type that the <code>impl</code> block
 have a parameter named <code>self</code> of type <code>Self</code> for their first parameter, so Rust
 lets you abbreviate this with only the name <code>self</code> in the first parameter spot.
 Note that we still need to use the <code>&amp;</code> in front of the <code>self</code> shorthand to
-indicate this method borrows the <code>Self</code> instance, just as we did in <code>rectangle: &amp;Rectangle</code>. Methods can take ownership of <code>self</code>, borrow <code>self</code> immutably as
-we’ve done here, or borrow <code>self</code> mutably, just as they can any other parameter.</p>
-<p>We’ve chosen <code>&amp;self</code> here for the same reason we used <code>&amp;Rectangle</code> in the
-function version: we don’t want to take ownership, and we just want to read the
-data in the struct, not write to it. If we wanted to change the instance that
-we’ve called the method on as part of what the method does, we’d use <code>&amp;mut self</code> as the first parameter. Having a method that takes ownership of the
-instance by using just <code>self</code> as the first parameter is rare; this technique is
-usually used when the method transforms <code>self</code> into something else and you want
-to prevent the caller from using the original instance after the transformation.</p>
-<p>The main reason for using methods instead of functions, in addition to providing
-method syntax and not having to repeat the type of <code>self</code> in every method’s
-signature, is for organization. We’ve put all the things we can do with an
-instance of a type in one <code>impl</code> block rather than making future users of our
-code search for capabilities of <code>Rectangle</code> in various places in the library we
-provide.</p>
+indicate that this method borrows the <code>Self</code> instance, just as we did in
+<code>rectangle: &amp;Rectangle</code>. Methods can take ownership of <code>self</code>, borrow <code>self</code>
+immutably, as we’ve done here, or borrow <code>self</code> mutably, just as they can any
+other parameter.</p>
+<p>We chose <code>&amp;self</code> here for the same reason we used <code>&amp;Rectangle</code> in the function
+version: we don’t want to take ownership, and we just want to read the data in
+the struct, not write to it. If we wanted to change the instance that we’ve
+called the method on as part of what the method does, we’d use <code>&amp;mut self</code> as
+the first parameter. Having a method that takes ownership of the instance by
+using just <code>self</code> as the first parameter is rare; this technique is usually
+used when the method transforms <code>self</code> into something else and you want to
+prevent the caller from using the original instance after the transformation.</p>
+<p>The main reason for using methods instead of functions, in addition to
+providing method syntax and not having to repeat the type of <code>self</code> in every
+method’s signature, is for organization. We’ve put all the things we can do
+with an instance of a type in one <code>impl</code> block rather than making future users
+of our code search for capabilities of <code>Rectangle</code> in various places in the
+library we provide.</p>
 <p>Note that we can choose to give a method the same name as one of the struct’s
-fields. For example, we can define a method on <code>Rectangle</code> also named <code>width</code>:</p>
+fields. For example, we can define a method on <code>Rectangle</code> that is also named
+<code>width</code>:</p>
 <p><span class="filename">Filename: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#[derive(Debug)]
 </span><span class="boring">struct Rectangle {
@@ -5235,18 +5265,19 @@ fn main() {
 }
 </code></pre></pre>
 <p>Here, we’re choosing to make the <code>width</code> method return <code>true</code> if the value in
-the instance’s <code>width</code> field is greater than 0, and <code>false</code> if the value is 0:
-we can use a field within a method of the same name for any purpose. In <code>main</code>,
-when we follow <code>rect1.width</code> with parentheses, Rust knows we mean the method
-<code>width</code>. When we don’t use parentheses, Rust knows we mean the field <code>width</code>.</p>
-<p>Often, but not always, when we give methods with the same name as a field we
-want it to only return the value in the field and do nothing else. Methods like
-this are called <em>getters</em>, and Rust does not implement them automatically for
-struct fields as some other languages do. Getters are useful because you can
-make the field private but the method public and thus enable read-only access
-to that field as part of the type’s public API. We will be discussing what
-public and private are and how to designate a field or method as public or
-private in Chapter 7.</p>
+the instance’s <code>width</code> field is greater than <code>0</code> and <code>false</code> if the value is
+<code>0</code>: we can use a field within a method of the same name for any purpose. In
+<code>main</code>, when we follow <code>rect1.width</code> with parentheses, Rust knows we mean the
+method <code>width</code>. When we don’t use parentheses, Rust knows we mean the field
+<code>width</code>.</p>
+<p>Often, but not always, when we give a method the same name as a field we want
+it to only return the value in the field and do nothing else. Methods like this
+are called <em>getters</em>, and Rust does not implement them automatically for struct
+fields as some other languages do. Getters are useful because you can make the
+field private but the method public, and thus enable read-only access to that
+field as part of the type’s public API. We will discuss what public and private
+are and how to designate a field or method as public or private in <a href="ch07-03-paths-for-referring-to-an-item-in-the-module-tree.html#exposing-paths-with-the-pub-keyword">Chapter
+7</a><!-- ignore -->.</p>
 <blockquote>
 <h3 id="wheres-the---operator"><a class="header" href="#wheres-the---operator">Where’s the <code>-&gt;</code> Operator?</a></h3>
 <p>In C and C++, two different operators are used for calling methods: you use
@@ -5292,11 +5323,11 @@ making ownership ergonomic in practice.</p>
 </blockquote>
 <h3 id="methods-with-more-parameters"><a class="header" href="#methods-with-more-parameters">Methods with More Parameters</a></h3>
 <p>Let’s practice using methods by implementing a second method on the <code>Rectangle</code>
-struct. This time, we want an instance of <code>Rectangle</code> to take another instance
+struct. This time we want an instance of <code>Rectangle</code> to take another instance
 of <code>Rectangle</code> and return <code>true</code> if the second <code>Rectangle</code> can fit completely
-within <code>self</code> (the first <code>Rectangle</code>); otherwise it should return <code>false</code>. That
-is, once we’ve defined the <code>can_hold</code> method, we want to be able to write the
-program shown in Listing 5-14.</p>
+within <code>self</code> (the first <code>Rectangle</code>); otherwise, it should return <code>false</code>.
+That is, once we’ve defined the <code>can_hold</code> method, we want to be able to write
+the program shown in Listing 5-14.</p>
 <p><span class="filename">Filename: src/main.rs</span></p>
 <pre><code class="language-rust ignore">fn main() {
     let rect1 = Rectangle {
@@ -5318,8 +5349,8 @@ program shown in Listing 5-14.</p>
 </code></pre>
 <p><span class="caption">Listing 5-14: Using the as-yet-unwritten <code>can_hold</code>
 method</span></p>
-<p>And the expected output would look like the following, because both dimensions
-of <code>rect2</code> are smaller than the dimensions of <code>rect1</code> but <code>rect3</code> is wider than
+<p>The expected output would look like the following because both dimensions of
+<code>rect2</code> are smaller than the dimensions of <code>rect1</code>, but <code>rect3</code> is wider than
 <code>rect1</code>:</p>
 <pre><code class="language-text">Can rect1 hold rect2? true
 Can rect1 hold rect3? false
@@ -5334,7 +5365,7 @@ read <code>rect2</code> (rather than write, which would mean we’d need a mutab
 and we want <code>main</code> to retain ownership of <code>rect2</code> so we can use it again after
 calling the <code>can_hold</code> method. The return value of <code>can_hold</code> will be a
 Boolean, and the implementation will check whether the width and height of
-<code>self</code> are both greater than the width and height of the other <code>Rectangle</code>,
+<code>self</code> are greater than the width and height of the other <code>Rectangle</code>,
 respectively. Let’s add the new <code>can_hold</code> method to the <code>impl</code> block from
 Listing 5-13, shown in Listing 5-15.</p>
 <p><span class="filename">Filename: src/main.rs</span></p>
@@ -5418,11 +5449,12 @@ is <code>Rectangle</code>.</p>
 <p>To call this associated function, we use the <code>::</code> syntax with the struct name;
 <code>let sq = Rectangle::square(3);</code> is an example. This function is namespaced by
 the struct: the <code>::</code> syntax is used for both associated functions and
-namespaces created by modules. We’ll discuss modules in Chapter 7.</p>
+namespaces created by modules. We’ll discuss modules in <a href="ch07-02-defining-modules-to-control-scope-and-privacy.html">Chapter
+7</a><!-- ignore -->.</p>
 <h3 id="multiple-impl-blocks"><a class="header" href="#multiple-impl-blocks">Multiple <code>impl</code> Blocks</a></h3>
 <p>Each struct is allowed to have multiple <code>impl</code> blocks. For example, Listing
-5-15 is equivalent to the code shown in Listing 5-16, which has each method
-in its own <code>impl</code> block.</p>
+5-15 is equivalent to the code shown in Listing 5-16, which has each method in
+its own <code>impl</code> block.</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#[derive(Debug)]
 </span><span class="boring">struct Rectangle {
 </span><span class="boring">    width: u32,
@@ -5474,8 +5506,8 @@ structs have.</p>
 <p>But structs aren’t the only way you can create custom types: let’s turn to
 Rust’s enum feature to add another tool to your toolbox.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="enums-and-pattern-matching"><a class="header" href="#enums-and-pattern-matching">Enums and Pattern Matching</a></h1>
-<p>In this chapter we’ll look at <em>enumerations</em>, also referred to as <em>enums</em>.
-Enums allow you to define a type by enumerating its possible <em>variants</em>. First,
+<p>In this chapter, we’ll look at <em>enumerations</em>, also referred to as <em>enums</em>.
+Enums allow you to define a type by enumerating its possible <em>variants</em>. First
 we’ll define and use an enum to show how an enum can encode meaning along with
 data. Next, we’ll explore a particularly useful enum, called <code>Option</code>, which
 expresses that a value can be either something or nothing. Then we’ll look at
@@ -5497,7 +5529,7 @@ IP address that our program will come across, we can <em>enumerate</em> all poss
 variants, which is where enumeration gets its name.</p>
 <p>Any IP address can be either a version four or a version six address, but not
 both at the same time. That property of IP addresses makes the enum data
-structure appropriate, because an enum value can only be one of its variants.
+structure appropriate because an enum value can only be one of its variants.
 Both version four and version six addresses are still fundamentally IP
 addresses, so they should be treated as the same type when the code is handling
 situations that apply to any kind of IP address.</p>
@@ -5625,14 +5657,14 @@ variants will have associated <code>String</code> values:</p>
 <span class="boring">}
 </span></code></pre></pre>
 <p>We attach data to each variant of the enum directly, so there is no need for an
-extra struct. Here it’s also easier to see another detail of how enums work:
+extra struct. Here, it’s also easier to see another detail of how enums work:
 the name of each enum variant that we define also becomes a function that
 constructs an instance of the enum. That is, <code>IpAddr::V4()</code> is a function call
 that takes a <code>String</code> argument and returns an instance of the <code>IpAddr</code> type. We
 automatically get this constructor function defined as a result of defining the
 enum.</p>
 <p>There’s another advantage to using an enum rather than a struct: each variant
-can have different types and amounts of associated data. Version four type IP
+can have different types and amounts of associated data. Version four IP
 addresses will always have four numeric components that will have values
 between 0 and 255. If we wanted to store <code>V4</code> addresses as four <code>u8</code> values but
 still express <code>V6</code> addresses as one <code>String</code> value, we wouldn’t be able to with
@@ -5696,7 +5728,7 @@ different amounts and types of values</span></p>
 <p>This enum has four variants with different types:</p>
 <ul>
 <li><code>Quit</code> has no data associated with it at all.</li>
-<li><code>Move</code> has named fields like a struct does.</li>
+<li><code>Move</code> has named fields, like a struct does.</li>
 <li><code>Write</code> includes a single <code>String</code>.</li>
 <li><code>ChangeColor</code> includes three <code>i32</code> values.</li>
 </ul>
@@ -5715,7 +5747,7 @@ struct ChangeColorMessage(i32, i32, i32); // tuple struct
 <span class="boring">
 </span><span class="boring">fn main() {}
 </span></code></pre></pre>
-<p>But if we used the different structs, which each have their own type, we
+<p>But if we used the different structs, each of which has its own type, we
 couldn’t as easily define a function to take any of these kinds of messages as
 we could with the <code>Message</code> enum defined in Listing 6-2, which is a single type.</p>
 <p>There is one more similarity between enums and structs: just as we’re able to
@@ -5749,8 +5781,8 @@ useful: <code>Option</code>.</p>
 <p>This section explores a case study of <code>Option</code>, which is another enum defined
 by the standard library. The <code>Option</code> type encodes the very common scenario in
 which a value could be something or it could be nothing.</p>
-<p>For example, if you request the first of a list containing items, you would get
-a value. If you request the first item of an empty list, you would get nothing.
+<p>For example, if you request the first item in a non-empty list, you would get
+a value. If you request the first item in an empty list, you would get nothing.
 Expressing this concept in terms of the type system means the compiler can
 check whether you’ve handled all the cases you should be handling; this
 functionality can prevent bugs that are extremely common in other programming
@@ -5797,11 +5829,11 @@ prefix. The <code>Option&lt;T&gt;</code> enum is still just a regular enum, and 
 <code>None</code> are still variants of type <code>Option&lt;T&gt;</code>.</p>
 <p>The <code>&lt;T&gt;</code> syntax is a feature of Rust we haven’t talked about yet. It’s a
 generic type parameter, and we’ll cover generics in more detail in Chapter 10.
-For now, all you need to know is that <code>&lt;T&gt;</code> means the <code>Some</code> variant of the
-<code>Option</code> enum can hold one piece of data of any type, and that each concrete
-type that gets used in place of <code>T</code> makes the overall <code>Option&lt;T&gt;</code> type a
-different type. Here are some examples of using <code>Option</code> values to hold number
-types and string types:</p>
+For now, all you need to know is that <code>&lt;T&gt;</code> means that the <code>Some</code> variant of
+the <code>Option</code> enum can hold one piece of data of any type, and that each
+concrete type that gets used in place of <code>T</code> makes the overall <code>Option&lt;T&gt;</code> type
+a different type. Here are some examples of using <code>Option</code> values to hold
+number types and string types:</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">fn main() {
 </span>    let some_number = Some(5);
     let some_char = Some('e');
@@ -5817,12 +5849,12 @@ type that the corresponding <code>Some</code> variant will hold by looking only 
 <code>None</code> value. Here, we tell Rust that we mean for <code>absent_number</code> to be of type
 <code>Option&lt;i32&gt;</code>.</p>
 <p>When we have a <code>Some</code> value, we know that a value is present and the value is
-held within the <code>Some</code>. When we have a <code>None</code> value, in some sense, it means
-the same thing as null: we don’t have a valid value. So why is having
-<code>Option&lt;T&gt;</code> any better than having null?</p>
+held within the <code>Some</code>. When we have a <code>None</code> value, in some sense it means the
+same thing as null: we don’t have a valid value. So why is having <code>Option&lt;T&gt;</code>
+any better than having null?</p>
 <p>In short, because <code>Option&lt;T&gt;</code> and <code>T</code> (where <code>T</code> can be any type) are different
 types, the compiler won’t let us use an <code>Option&lt;T&gt;</code> value as if it were
-definitely a valid value. For example, this code won’t compile because it’s
+definitely a valid value. For example, this code won’t compile, because it’s
 trying to add an <code>i8</code> to an <code>Option&lt;i8&gt;</code>:</p>
 <pre><code class="language-rust ignore does_not_compile"><span class="boring">fn main() {
 </span>    let x: i8 = 5;
@@ -5831,7 +5863,7 @@ trying to add an <code>i8</code> to an <code>Option&lt;i8&gt;</code>:</p>
     let sum = x + y;
 <span class="boring">}
 </span></code></pre>
-<p>If we run this code, we get an error message like this:</p>
+<p>If we run this code, we get an error message like this one:</p>
 <pre><code class="language-console">$ cargo run
    Compiling enums v0.1.0 (file:///projects/enums)
 error[E0277]: cannot add `Option&lt;i8&gt;` to `i8`
@@ -5865,8 +5897,7 @@ not having a value, and the compiler will make sure we handle that case before
 using the value.</p>
 <p>In other words, you have to convert an <code>Option&lt;T&gt;</code> to a <code>T</code> before you can
 perform <code>T</code> operations with it. Generally, this helps catch one of the most
-common issues with null: assuming that something isn’t null when it actually
-is.</p>
+common issues with null: assuming that something isn’t null when it actually is.</p>
 <p>Eliminating the risk of incorrectly assuming a not-null value helps you to be
 more confident in your code. In order to have a value that can possibly be
 null, you must explicitly opt in by making the type of that value <code>Option&lt;T&gt;</code>.
@@ -5875,37 +5906,40 @@ when the value is null. Everywhere that a value has a type that isn’t an
 <code>Option&lt;T&gt;</code>, you <em>can</em> safely assume that the value isn’t null. This was a
 deliberate design decision for Rust to limit null’s pervasiveness and increase
 the safety of Rust code.</p>
-<p>So, how do you get the <code>T</code> value out of a <code>Some</code> variant when you have a value
-of type <code>Option&lt;T&gt;</code> so you can use that value? The <code>Option&lt;T&gt;</code> enum has a large
-number of methods that are useful in a variety of situations; you can check
-them out in <a href="../std/option/enum.Option.html">its documentation</a><!-- ignore -->. Becoming familiar with
-the methods on <code>Option&lt;T&gt;</code> will be extremely useful in your journey with Rust.</p>
+<p>So how do you get the <code>T</code> value out of a <code>Some</code> variant when you have a value
+of type <code>Option&lt;T&gt;</code> so that you can use that value? The <code>Option&lt;T&gt;</code> enum has a
+large number of methods that are useful in a variety of situations; you can
+check them out in <a href="../std/option/enum.Option.html">its documentation</a><!-- ignore -->. Becoming familiar
+with the methods on <code>Option&lt;T&gt;</code> will be extremely useful in your journey with
+Rust.</p>
 <p>In general, in order to use an <code>Option&lt;T&gt;</code> value, you want to have code that
 will handle each variant. You want some code that will run only when you have a
 <code>Some(T)</code> value, and this code is allowed to use the inner <code>T</code>. You want some
-other code to run if you have a <code>None</code> value, and that code doesn’t have a <code>T</code>
-value available. The <code>match</code> expression is a control flow construct that does
-just this when used with enums: it will run different code depending on which
-variant of the enum it has, and that code can use the data inside the matching
-value.</p>
-<div style="break-before: page; page-break-before: always;"></div><p><a id="the-match-control-flow-operator"></a></p>
+other code to run only if you have a <code>None</code> value, and that code doesn’t have a
+<code>T</code> value available. The <code>match</code> expression is a control flow construct that
+does just this when used with enums: it will run different code depending on
+which variant of the enum it has, and that code can use the data inside the
+matching value.</p>
+<div style="break-before: page; page-break-before: always;"></div><!-- Old heading. Do not remove or links may break. -->
+<p><a id="the-match-control-flow-operator"></a></p>
 <h2 id="the-match-control-flow-construct"><a class="header" href="#the-match-control-flow-construct">The <code>match</code> Control Flow Construct</a></h2>
-<p>Rust has an extremely powerful control flow construct called <code>match</code> that allows
-you to compare a value against a series of patterns and then execute code based
-on which pattern matches. Patterns can be made up of literal values, variable
-names, wildcards, and many other things; Chapter 18 covers all the different
-kinds of patterns and what they do. The power of <code>match</code> comes from the
-expressiveness of the patterns and the fact that the compiler confirms that all
-possible cases are handled.</p>
+<p>Rust has an extremely powerful control flow construct called <code>match</code> that
+allows you to compare a value against a series of patterns and then execute
+code based on which pattern matches. Patterns can be made up of literal values,
+variable names, wildcards, and many other things; <a href="ch18-00-patterns.html">Chapter
+18</a><!-- ignore --> covers all the different kinds of patterns
+and what they do. The power of <code>match</code> comes from the expressiveness of the
+patterns and the fact that the compiler confirms that all possible cases are
+handled.</p>
 <p>Think of a <code>match</code> expression as being like a coin-sorting machine: coins slide
 down a track with variously sized holes along it, and each coin falls through
 the first hole it encounters that it fits into. In the same way, values go
 through each pattern in a <code>match</code>, and at the first pattern the value “fits,”
 the value falls into the associated code block to be used during execution.</p>
 <p>Speaking of coins, let’s use them as an example using <code>match</code>! We can write a
-function that takes an unknown United States coin and, in a similar way as the
-counting machine, determines which coin it is and returns its value in cents, as
-shown here in Listing 6-3.</p>
+function that takes an unknown US coin and, in a similar way as the counting
+machine, determines which coin it is and returns its value in cents, as shown
+in Listing 6-3.</p>
 <pre><pre class="playground"><code class="language-rust">enum Coin {
     Penny,
     Nickel,
@@ -5926,22 +5960,22 @@ fn value_in_cents(coin: Coin) -&gt; u8 {
 </span></code></pre></pre>
 <p><span class="caption">Listing 6-3: An enum and a <code>match</code> expression that has
 the variants of the enum as its patterns</span></p>
-<p>Let’s break down the <code>match</code> in the <code>value_in_cents</code> function. First, we list
+<p>Let’s break down the <code>match</code> in the <code>value_in_cents</code> function. First we list
 the <code>match</code> keyword followed by an expression, which in this case is the value
-<code>coin</code>. This seems very similar to an expression used with <code>if</code>, but there’s a
-big difference: with <code>if</code>, the expression needs to return a Boolean value, but
-here, it can return any type. The type of <code>coin</code> in this example is the <code>Coin</code>
-enum that we defined on the first line.</p>
+<code>coin</code>. This seems very similar to a conditional expression used with <code>if</code>, but
+there’s a big difference: with <code>if</code>, the condition needs to evaluate to a
+Boolean value, but here it can be any type. The type of <code>coin</code> in this example
+is the <code>Coin</code> enum that we defined on the first line.</p>
 <p>Next are the <code>match</code> arms. An arm has two parts: a pattern and some code. The
 first arm here has a pattern that is the value <code>Coin::Penny</code> and then the <code>=&gt;</code>
 operator that separates the pattern and the code to run. The code in this case
 is just the value <code>1</code>. Each arm is separated from the next with a comma.</p>
-<p>When the <code>match</code> expression executes, it compares the resulting value against
+<p>When the <code>match</code> expression executes, it compares the resultant value against
 the pattern of each arm, in order. If a pattern matches the value, the code
 associated with that pattern is executed. If that pattern doesn’t match the
 value, execution continues to the next arm, much as in a coin-sorting machine.
 We can have as many arms as we need: in Listing 6-3, our <code>match</code> has four arms.</p>
-<p>The code associated with each arm is an expression, and the resulting value of
+<p>The code associated with each arm is an expression, and the resultant value of
 the expression in the matching arm is the value that gets returned for the
 entire <code>match</code> expression.</p>
 <p>We don’t typically use curly brackets if the match arm code is short, as it is
@@ -5971,7 +6005,7 @@ returns the last value of the block, <code>1</code>:</p>
 <span class="boring">
 </span><span class="boring">fn main() {}
 </span></code></pre></pre>
-<h3 id="patterns-that-bind-to-values"><a class="header" href="#patterns-that-bind-to-values">Patterns that Bind to Values</a></h3>
+<h3 id="patterns-that-bind-to-values"><a class="header" href="#patterns-that-bind-to-values">Patterns That Bind to Values</a></h3>
 <p>Another useful feature of match arms is that they can bind to the parts of the
 values that match the pattern. This is how we can extract values out of enum
 variants.</p>
@@ -5979,8 +6013,8 @@ variants.</p>
 From 1999 through 2008, the United States minted quarters with different
 designs for each of the 50 states on one side. No other coins got state
 designs, so only quarters have this extra value. We can add this information to
-our <code>enum</code> by changing the <code>Quarter</code> variant to include a <code>UsState</code> value stored
-inside it, which we’ve done here in Listing 6-4.</p>
+our <code>enum</code> by changing the <code>Quarter</code> variant to include a <code>UsState</code> value
+stored inside it, which we’ve done in Listing 6-4.</p>
 <pre><pre class="playground"><code class="language-rust">#[derive(Debug)] // so we can inspect the state in a minute
 enum UsState {
     Alabama,
@@ -6001,8 +6035,8 @@ enum Coin {
 also holds a <code>UsState</code> value</span></p>
 <p>Let’s imagine that a friend is trying to collect all 50 state quarters. While
 we sort our loose change by coin type, we’ll also call out the name of the
-state associated with each quarter so if it’s one our friend doesn’t have, they
-can add it to their collection.</p>
+state associated with each quarter so that if it’s one our friend doesn’t have,
+they can add it to their collection.</p>
 <p>In the match expression for this code, we add a variable called <code>state</code> to the
 pattern that matches values of the variant <code>Coin::Quarter</code>. When a
 <code>Coin::Quarter</code> matches, the <code>state</code> variable will bind to the value of that
@@ -6045,10 +6079,10 @@ then use that binding in the <code>println!</code> expression, thus getting the 
 state value out of the <code>Coin</code> enum variant for <code>Quarter</code>.</p>
 <h3 id="matching-with-optiont"><a class="header" href="#matching-with-optiont">Matching with <code>Option&lt;T&gt;</code></a></h3>
 <p>In the previous section, we wanted to get the inner <code>T</code> value out of the <code>Some</code>
-case when using <code>Option&lt;T&gt;</code>; we can also handle <code>Option&lt;T&gt;</code> using <code>match</code> as we
-did with the <code>Coin</code> enum! Instead of comparing coins, we’ll compare the
-variants of <code>Option&lt;T&gt;</code>, but the way that the <code>match</code> expression works remains
-the same.</p>
+case when using <code>Option&lt;T&gt;</code>; we can also handle <code>Option&lt;T&gt;</code> using <code>match</code>, as
+we did with the <code>Coin</code> enum! Instead of comparing coins, we’ll compare the
+variants of <code>Option&lt;T&gt;</code>, but the way the <code>match</code> expression works remains the
+same.</p>
 <p>Let’s say we want to write a function that takes an <code>Option&lt;i32&gt;</code> and, if
 there’s a value inside, adds 1 to that value. If there isn’t a value inside,
 the function should return the <code>None</code> value and not attempt to perform any
@@ -6072,7 +6106,7 @@ Listing 6-5.</p>
 an <code>Option&lt;i32&gt;</code></span></p>
 <p>Let’s examine the first execution of <code>plus_one</code> in more detail. When we call
 <code>plus_one(five)</code>, the variable <code>x</code> in the body of <code>plus_one</code> will have the
-value <code>Some(5)</code>. We then compare that against each match arm.</p>
+value <code>Some(5)</code>. We then compare that against each match arm:</p>
 <pre><code class="language-rust ignore"><span class="boring">fn main() {
 </span><span class="boring">    fn plus_one(x: Option&lt;i32&gt;) -&gt; Option&lt;i32&gt; {
 </span><span class="boring">        match x {
@@ -6087,7 +6121,7 @@ value <code>Some(5)</code>. We then compare that against each match arm.</p>
 </span><span class="boring">}
 </span></code></pre>
 <p>The <code>Some(5)</code> value doesn’t match the pattern <code>None</code>, so we continue to the
-next arm.</p>
+next arm:</p>
 <pre><code class="language-rust ignore"><span class="boring">fn main() {
 </span><span class="boring">    fn plus_one(x: Option&lt;i32&gt;) -&gt; Option&lt;i32&gt; {
 </span><span class="boring">        match x {
@@ -6101,12 +6135,12 @@ next arm.</p>
 </span><span class="boring">    let none = plus_one(None);
 </span><span class="boring">}
 </span></code></pre>
-<p>Does <code>Some(5)</code> match <code>Some(i)</code>? Why yes it does! We have the same variant. The
-<code>i</code> binds to the value contained in <code>Some</code>, so <code>i</code> takes the value <code>5</code>. The
-code in the match arm is then executed, so we add 1 to the value of <code>i</code> and
-create a new <code>Some</code> value with our total <code>6</code> inside.</p>
+<p>Does <code>Some(5)</code> match <code>Some(i)</code>? It does! We have the same variant. The <code>i</code>
+binds to the value contained in <code>Some</code>, so <code>i</code> takes the value <code>5</code>. The code in
+the match arm is then executed, so we add 1 to the value of <code>i</code> and create a
+new <code>Some</code> value with our total <code>6</code> inside.</p>
 <p>Now let’s consider the second call of <code>plus_one</code> in Listing 6-5, where <code>x</code> is
-<code>None</code>. We enter the <code>match</code> and compare to the first arm.</p>
+<code>None</code>. We enter the <code>match</code> and compare to the first arm:</p>
 <pre><code class="language-rust ignore"><span class="boring">fn main() {
 </span><span class="boring">    fn plus_one(x: Option&lt;i32&gt;) -&gt; Option&lt;i32&gt; {
 </span><span class="boring">        match x {
@@ -6150,23 +6184,23 @@ error:</p>
 <pre><code class="language-console">$ cargo run
    Compiling enums v0.1.0 (file:///projects/enums)
 error[E0004]: non-exhaustive patterns: `None` not covered
-   --&gt; src/main.rs:3:15
-    |
-3   |         match x {
-    |               ^ pattern `None` not covered
-    |
+ --&gt; src/main.rs:3:15
+  |
+3 |         match x {
+  |               ^ pattern `None` not covered
+  |
 note: `Option&lt;i32&gt;` defined here
-    = note: the matched value is of type `Option&lt;i32&gt;`
+  = note: the matched value is of type `Option&lt;i32&gt;`
 help: ensure that all possible cases are being handled by adding a match arm with a wildcard pattern or an explicit pattern as shown
-    |
-4   ~             Some(i) =&gt; Some(i + 1),
-5   ~             None =&gt; todo!(),
-    |
+  |
+4 ~             Some(i) =&gt; Some(i + 1),
+5 ~             None =&gt; todo!(),
+  |
 
 For more information about this error, try `rustc --explain E0004`.
 error: could not compile `enums` due to previous error
 </code></pre>
-<p>Rust knows that we didn’t cover every possible case and even knows which
+<p>Rust knows that we didn’t cover every possible case, and even knows which
 pattern we forgot! Matches in Rust are <em>exhaustive</em>: we must exhaust every last
 possibility in order for the code to be valid. Especially in the case of
 <code>Option&lt;T&gt;</code>, when Rust prevents us from forgetting to explicitly handle the
@@ -6195,10 +6229,10 @@ this example:</p>
     fn move_player(num_spaces: u8) {}
 <span class="boring">}
 </span></code></pre></pre>
-<p>For the first two arms, the patterns are the literal values 3 and 7. For the
-last arm that covers every other possible value, the pattern is the variable
-we’ve chosen to name <code>other</code>. The code that runs for the <code>other</code> arm uses the
-variable by passing it to the <code>move_player</code> function.</p>
+<p>For the first two arms, the patterns are the literal values <code>3</code> and <code>7</code>. For
+the last arm that covers every other possible value, the pattern is the
+variable we’ve chosen to name <code>other</code>. The code that runs for the <code>other</code> arm
+uses the variable by passing it to the <code>move_player</code> function.</p>
 <p>This code compiles, even though we haven’t listed all the possible values a
 <code>u8</code> can have, because the last pattern will match all values not specifically
 listed. This catch-all pattern meets the requirement that <code>match</code> must be
@@ -6227,7 +6261,7 @@ can change our code to use <code>_</code> instead of the variable named <code>ot
 </span></code></pre></pre>
 <p>This example also meets the exhaustiveness requirement because we’re explicitly
 ignoring all other values in the last arm; we haven’t forgotten anything.</p>
-<p>Finally, we’ll change the rules of the game one more time, so that nothing else
+<p>Finally, we’ll change the rules of the game one more time so that nothing else
 happens on your turn if you roll anything other than a 3 or a 7. We can express
 that by using the unit value (the empty tuple type we mentioned in <a href="ch03-02-data-types.html#the-tuple-type">“The Tuple
 Type”</a><!-- ignore --> section) as the code that goes with the <code>_</code> arm:</p>
@@ -6253,8 +6287,9 @@ is a bit wordy.</p>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="concise-control-flow-with-if-let"><a class="header" href="#concise-control-flow-with-if-let">Concise Control Flow with <code>if let</code></a></h2>
 <p>The <code>if let</code> syntax lets you combine <code>if</code> and <code>let</code> into a less verbose way to
 handle values that match one pattern while ignoring the rest. Consider the
-program in Listing 6-6 that matches on an <code>Option&lt;u8&gt;</code> value in the <code>config_max</code>
-variable but only wants to execute code if the value is the <code>Some</code> variant.</p>
+program in Listing 6-6 that matches on an <code>Option&lt;u8&gt;</code> value in the
+<code>config_max</code> variable but only wants to execute code if the value is the <code>Some</code>
+variant.</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">fn main() {
 </span>    let config_max = Some(3u8);
     match config_max {
@@ -6282,7 +6317,7 @@ code behaves the same as the <code>match</code> in Listing 6-6:</p>
 sign. It works the same way as a <code>match</code>, where the expression is given to the
 <code>match</code> and the pattern is its first arm. In this case, the pattern is
 <code>Some(max)</code>, and the <code>max</code> binds to the value inside the <code>Some</code>. We can then
-use <code>max</code> in the body of the <code>if let</code> block in the same way as we used <code>max</code> in
+use <code>max</code> in the body of the <code>if let</code> block in the same way we used <code>max</code> in
 the corresponding <code>match</code> arm. The code in the <code>if let</code> block isn’t run if the
 value doesn’t match the pattern.</p>
 <p>Using <code>if let</code> means less typing, less indentation, and less boilerplate code.
@@ -6298,7 +6333,7 @@ runs code when the value matches one pattern and then ignores all other values.<
 <code>Coin</code> enum definition in Listing 6-4, where the <code>Quarter</code> variant also held a
 <code>UsState</code> value. If we wanted to count all non-quarter coins we see while also
 announcing the state of the quarters, we could do that with a <code>match</code>
-expression like this:</p>
+expression, like this:</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#[derive(Debug)]
 </span><span class="boring">enum UsState {
 </span><span class="boring">    Alabama,
@@ -6322,7 +6357,7 @@ expression like this:</p>
     }
 <span class="boring">}
 </span></code></pre></pre>
-<p>Or we could use an <code>if let</code> and <code>else</code> expression like this:</p>
+<p>Or we could use an <code>if let</code> and <code>else</code> expression, like this:</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#[derive(Debug)]
 </span><span class="boring">enum UsState {
 </span><span class="boring">    Alabama,
@@ -6357,7 +6392,7 @@ data inside them, you can use <code>match</code> or <code>if let</code> to extra
 values, depending on how many cases you need to handle.</p>
 <p>Your Rust programs can now express concepts in your domain using structs and
 enums. Creating custom types to use in your API ensures type safety: the
-compiler will make certain your functions get only values of the type each
+compiler will make certain your functions only get values of the type each
 function expects.</p>
 <p>In order to provide a well-organized API to your users that is straightforward
 to use and only exposes exactly what your users will need, let’s now turn to
@@ -7629,12 +7664,12 @@ error[E0502]: cannot borrow `v` as mutable because it is also borrowed as immuta
   |
 4 |     let first = &amp;v[0];
   |                  - immutable borrow occurs here
-5 | 
+5 |
 6 |     v.push(6);
   |     ^^^^^^^^^ mutable borrow occurs here
-7 | 
-8 |     println!(&quot;The first element is: {}&quot;, first);
-  |                                          ----- immutable borrow later used here
+7 |
+8 |     println!(&quot;The first element is: {first}&quot;);
+  |                                      ----- immutable borrow later used here
 
 For more information about this error, try `rustc --explain E0502`.
 error: could not compile `collections` due to previous error
@@ -8090,7 +8125,7 @@ index were accessed in a vector:</p>
    Compiling collections v0.1.0 (file:///projects/collections)
     Finished dev [unoptimized + debuginfo] target(s) in 0.43s
      Running `target/debug/collections`
-thread 'main' panicked at 'byte index 1 is not a char boundary; it is inside 'З' (bytes 0..2) of `Здравствуйте`', library/core/src/str/mod.rs:127:5
+thread 'main' panicked at 'byte index 1 is not a char boundary; it is inside 'З' (bytes 0..2) of `Здравствуйте`', src/main.rs:4:14
 note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 </code></pre>
 <p>You should use ranges to create string slices with caution, because doing so
@@ -9000,11 +9035,10 @@ message:</p>
 error[E0277]: the `?` operator can only be used in a function that returns `Result` or `Option` (or another type that implements `FromResidual`)
  --&gt; src/main.rs:4:48
   |
-3 | / fn main() {
-4 | |     let greeting_file = File::open(&quot;hello.txt&quot;)?;
-  | |                                                ^ cannot use the `?` operator in a function that returns `()`
-5 | | }
-  | |_- this function should return `Result` or `Option` to accept `?`
+3 | fn main() {
+  | --------- this function should return `Result` or `Option` to accept `?`
+4 |     let greeting_file = File::open(&quot;hello.txt&quot;)?;
+  |                                                ^ cannot use the `?` operator in a function that returns `()`
   |
   = help: the trait `FromResidual&lt;Result&lt;Infallible, std::io::Error&gt;&gt;` is not implemented for `()`
 
@@ -10552,7 +10586,7 @@ error[E0597]: `x` does not live long enough
   |             ^^ borrowed value does not live long enough
 7 |     }
   |     - `x` dropped here while still borrowed
-8 | 
+8 |
 9 |     println!(&quot;r: {}&quot;, r);
   |                       - borrow later used here
 
@@ -11432,7 +11466,7 @@ failures:
 
 test result: FAILED. 1 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
 
-error: test failed, to rerun pass '--lib'
+error: test failed, to rerun pass `--lib`
 </code></pre>
 <p><span class="caption">Listing 11-4: Test results when one test passes and one
 test fails</span></p>
@@ -11685,7 +11719,7 @@ failures:
 
 test result: FAILED. 1 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
 
-error: test failed, to rerun pass '--lib'
+error: test failed, to rerun pass `--lib`
 </code></pre>
 <p>Our tests caught the bug! Because <code>larger.width</code> is 8 and <code>smaller.width</code> is
 5, the comparison of the widths in <code>can_hold</code> now returns <code>false</code>: 8 is not
@@ -11779,7 +11813,7 @@ failures:
 
 test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
 
-error: test failed, to rerun pass '--lib'
+error: test failed, to rerun pass `--lib`
 </code></pre>
 <p>Our test caught the bug! The <code>it_adds_two</code> test failed, and the message tells
 us that the assertion that fails was <code>assertion failed: `(left == right)`</code>
@@ -11886,7 +11920,7 @@ failures:
 
 test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
 
-error: test failed, to rerun pass '--lib'
+error: test failed, to rerun pass `--lib`
 </code></pre>
 <p>This result just indicates that the assertion failed and which line the
 assertion is on. A more useful failure message would print the value from the
@@ -11933,7 +11967,7 @@ failures:
 
 test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
 
-error: test failed, to rerun pass '--lib'
+error: test failed, to rerun pass `--lib`
 </code></pre>
 <p>We can see the value we actually got in the test output, which would help us
 debug what happened instead of what we were expecting to happen.</p>
@@ -12044,7 +12078,7 @@ failures:
 
 test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
 
-error: test failed, to rerun pass '--lib'
+error: test failed, to rerun pass `--lib`
 </code></pre>
 <p>We don’t get a very helpful message in this case, but when we look at the test
 function, we see that it’s annotated with <code>#[should_panic]</code>. The failure we got
@@ -12161,7 +12195,7 @@ failures:
 
 test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
 
-error: test failed, to rerun pass '--lib'
+error: test failed, to rerun pass `--lib`
 </code></pre>
 <p>The failure message indicates that this test did indeed panic as we expected,
 but the panic message did not include the expected string <code>'Guess value must be less than or equal to 100'</code>. The panic message that we did get in this case was
@@ -12291,7 +12325,7 @@ failures:
 
 test result: FAILED. 1 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
 
-error: test failed, to rerun pass '--lib'
+error: test failed, to rerun pass `--lib`
 </code></pre>
 <p>Note that nowhere in this output do we see <code>I got the value 4</code>, which is what
 is printed when the test that passes runs. That output has been captured. The
@@ -12336,7 +12370,7 @@ failures:
 
 test result: FAILED. 1 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
 
-error: test failed, to rerun pass '--lib'
+error: test failed, to rerun pass `--lib`
 </code></pre>
 <h3 id="running-a-subset-of-tests-by-name"><a class="header" href="#running-a-subset-of-tests-by-name">Running a Subset of Tests by Name</a></h3>
 <p>Sometimes, running a full test suite can take a long time. If you’re working on
@@ -14039,7 +14073,7 @@ failures:
 
 test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
 
-error: test failed, to rerun pass '--lib'
+error: test failed, to rerun pass `--lib`
 </code></pre>
 <p>Great, the test fails, exactly as we expected. Let’s get the test to pass!</p>
 <h3 id="writing-code-to-pass-the-test"><a class="header" href="#writing-code-to-pass-the-test">Writing Code to Pass the Test</a></h3>
@@ -15335,9 +15369,16 @@ error[E0308]: mismatched types
  --&gt; src/main.rs:5:29
   |
 5 |     let n = example_closure(5);
-  |                             ^- help: try using a conversion method: `.to_string()`
-  |                             |
-  |                             expected struct `String`, found integer
+  |             --------------- ^- help: try using a conversion method: `.to_string()`
+  |             |               |
+  |             |               expected struct `String`, found integer
+  |             arguments to this function are incorrect
+  |
+note: closure parameter defined here
+ --&gt; src/main.rs:2:28
+  |
+2 |     let example_closure = |x| x;
+  |                            ^
 
 For more information about this error, try `rustc --explain E0308`.
 error: could not compile `closure-example` due to previous error
@@ -15617,16 +15658,13 @@ implement <code>FnMut</code>:</p>
 error[E0507]: cannot move out of `value`, a captured variable in an `FnMut` closure
   --&gt; src/main.rs:18:30
    |
-15 |       let value = String::from(&quot;by key called&quot;);
-   |           ----- captured outer variable
-16 | 
-17 |       list.sort_by_key(|r| {
-   |  ______________________-
-18 | |         sort_operations.push(value);
-   | |                              ^^^^^ move occurs because `value` has type `String`, which does not implement the `Copy` trait
-19 | |         r.width
-20 | |     });
-   | |_____- captured by this `FnMut` closure
+15 |     let value = String::from(&quot;by key called&quot;);
+   |         ----- captured outer variable
+16 |
+17 |     list.sort_by_key(|r| {
+   |                      --- captured by this `FnMut` closure
+18 |         sort_operations.push(value);
+   |                              ^^^^^ move occurs because `value` has type `String`, which does not implement the `Copy` trait
 
 For more information about this error, try `rustc --explain E0507`.
 error: could not compile `rectangles` due to previous error
@@ -17735,18 +17773,8 @@ help: insert some indirection (e.g., a `Box`, `Rc`, or `&amp;`) to make `List` r
 2 |     Cons(i32, Box&lt;List&gt;),
   |               ++++    +
 
-error[E0391]: cycle detected when computing drop-check constraints for `List`
- --&gt; src/main.rs:1:1
-  |
-1 | enum List {
-  | ^^^^^^^^^
-  |
-  = note: ...which immediately requires computing drop-check constraints for `List` again
-  = note: cycle used when computing dropck types for `Canonical { max_universe: U0, variables: [], value: ParamEnvAnd { param_env: ParamEnv { caller_bounds: [], reveal: UserFacing, constness: NotConst }, value: List } }`
-
-Some errors have detailed explanations: E0072, E0391.
-For more information about an error, try `rustc --explain E0072`.
-error: could not compile `cons-list` due to 2 previous errors
+For more information about this error, try `rustc --explain E0072`.
+error: could not compile `cons-list` due to previous error
 </code></pre>
 <p><span class="caption">Listing 15-4: The error we get when attempting to define
 a recursive enum</span></p>
@@ -19081,7 +19109,7 @@ failures:
 
 test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
 
-error: test failed, to rerun pass '--lib'
+error: test failed, to rerun pass `--lib`
 </code></pre>
 <p>Notice that the code panicked with the message <code>already borrowed: BorrowMutError</code>. This is how <code>RefCell&lt;T&gt;</code> handles violations of the borrowing
 rules at runtime.</p>
@@ -19981,7 +20009,7 @@ error[E0382]: use of moved value: `v`
    |
 4  |     let v = vec![1, 2, 3];
    |         - move occurs because `v` has type `Vec&lt;i32&gt;`, which does not implement the `Copy` trait
-5  | 
+5  |
 6  |     let handle = thread::spawn(move || {
    |                                ------- value moved into closure here
 7  |         println!(&quot;Here's a vector: {:?}&quot;, v);
@@ -20175,7 +20203,7 @@ error[E0382]: borrow of moved value: `val`
 10 |         println!(&quot;val is {}&quot;, val);
    |                               ^^^ value borrowed here after move
    |
-   = note: this error originates in the macro `$crate::format_args_nl` (in Nightly builds, run with -Z macro-backtrace for more info)
+   = note: this error originates in the macro `$crate::format_args_nl` which comes from the expansion of the macro `println` (in Nightly builds, run with -Z macro-backtrace for more info)
 
 For more information about this error, try `rustc --explain E0382`.
 error: could not compile `message-passing` due to previous error
@@ -20501,20 +20529,26 @@ a lot.</p>
 <pre><code class="language-console">$ cargo run
    Compiling shared-state v0.1.0 (file:///projects/shared-state)
 error[E0277]: `Rc&lt;Mutex&lt;i32&gt;&gt;` cannot be sent between threads safely
-   --&gt; src/main.rs:11:22
-    |
-11  |           let handle = thread::spawn(move || {
-    |  ______________________^^^^^^^^^^^^^_-
-    | |                      |
-    | |                      `Rc&lt;Mutex&lt;i32&gt;&gt;` cannot be sent between threads safely
-12  | |             let mut num = counter.lock().unwrap();
-13  | |
-14  | |             *num += 1;
-15  | |         });
-    | |_________- within this `[closure@src/main.rs:11:36: 15:10]`
-    |
-    = help: within `[closure@src/main.rs:11:36: 15:10]`, the trait `Send` is not implemented for `Rc&lt;Mutex&lt;i32&gt;&gt;`
-    = note: required because it appears within the type `[closure@src/main.rs:11:36: 15:10]`
+  --&gt; src/main.rs:11:36
+   |
+11 |           let handle = thread::spawn(move || {
+   |                        ------------- ^------
+   |                        |             |
+   |  ______________________|_____________within this `[closure@src/main.rs:11:36: 11:43]`
+   | |                      |
+   | |                      required by a bound introduced by this call
+12 | |             let mut num = counter.lock().unwrap();
+13 | |
+14 | |             *num += 1;
+15 | |         });
+   | |_________^ `Rc&lt;Mutex&lt;i32&gt;&gt;` cannot be sent between threads safely
+   |
+   = help: within `[closure@src/main.rs:11:36: 11:43]`, the trait `Send` is not implemented for `Rc&lt;Mutex&lt;i32&gt;&gt;`
+note: required because it's used within this closure
+  --&gt; src/main.rs:11:36
+   |
+11 |         let handle = thread::spawn(move || {
+   |                                    ^^^^^^^
 note: required by a bound in `spawn`
 
 For more information about this error, try `rustc --explain E0277`.
@@ -21148,7 +21182,7 @@ error[E0277]: the trait bound `String: Draw` is not satisfied
   |                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^ the trait `Draw` is not implemented for `String`
   |
   = help: the trait `Draw` is implemented for `Button`
-  = note: required for the cast to the object type `dyn Draw`
+  = note: required for the cast from `String` to the object type `dyn Draw`
 
 For more information about this error, try `rustc --explain E0277`.
 error: could not compile `gui` due to previous error
@@ -22338,19 +22372,19 @@ use a refutable pattern where an irrefutable pattern is required:</p>
 <pre><code class="language-console">$ cargo run
    Compiling patterns v0.1.0 (file:///projects/patterns)
 error[E0005]: refutable pattern in local binding: `None` not covered
-   --&gt; src/main.rs:3:9
-    |
-3   |     let Some(x) = some_option_value;
-    |         ^^^^^^^ pattern `None` not covered
-    |
-    = note: `let` bindings require an &quot;irrefutable pattern&quot;, like a `struct` or an `enum` with only one variant
-    = note: for more information, visit https://doc.rust-lang.org/book/ch18-02-refutability.html
+ --&gt; src/main.rs:3:9
+  |
+3 |     let Some(x) = some_option_value;
+  |         ^^^^^^^ pattern `None` not covered
+  |
+  = note: `let` bindings require an &quot;irrefutable pattern&quot;, like a `struct` or an `enum` with only one variant
+  = note: for more information, visit https://doc.rust-lang.org/book/ch18-02-refutability.html
 note: `Option&lt;i32&gt;` defined here
-    = note: the matched value is of type `Option&lt;i32&gt;`
+  = note: the matched value is of type `Option&lt;i32&gt;`
 help: you might want to use `if let` to ignore the variant that isn't matched
-    |
-3   |     let x = if let Some(x) = some_option_value { x } else { todo!() };
-    |     ++++++++++                                 ++++++++++++++++++++++
+  |
+3 |     let x = if let Some(x) = some_option_value { x } else { todo!() };
+  |     ++++++++++                                 ++++++++++++++++++++++
 
 For more information about this error, try `rustc --explain E0005`.
 error: could not compile `patterns` due to previous error
@@ -22641,16 +22675,14 @@ fn main() {
             println!(&quot;The Quit variant has no data to destructure.&quot;);
         }
         Message::Move { x, y } =&gt; {
-            println!(
-                &quot;Move in the x direction {x} and in the y direction {y}&quot;
-            );
+            println!(&quot;Move in the x direction {x} and in the y direction {y}&quot;);
         }
         Message::Write(text) =&gt; {
             println!(&quot;Text message: {text}&quot;);
         }
-        Message::ChangeColor(r, g, b) =&gt; println!(
-            &quot;Change the color to red {r}, green {g}, and blue {b}&quot;,
-        ),
+        Message::ChangeColor(r, g, b) =&gt; {
+            println!(&quot;Change the color to red {r}, green {g}, and blue {b}&quot;,)
+        }
     }
 }
 </code></pre></pre>
@@ -22695,9 +22727,9 @@ fn main() {
         Message::ChangeColor(Color::Rgb(r, g, b)) =&gt; {
             println!(&quot;Change color to red {r}, green {g}, and blue {b}&quot;);
         }
-        Message::ChangeColor(Color::Hsv(h, s, v)) =&gt; println!(
-            &quot;Change color to hue {h}, saturation {s}, value {v}&quot;
-        ),
+        Message::ChangeColor(Color::Hsv(h, s, v)) =&gt; {
+            println!(&quot;Change color to hue {h}, saturation {s}, value {v}&quot;)
+        }
         _ =&gt; (),
     }
 }
@@ -24012,15 +24044,21 @@ other types that implement the <code>Animal</code> trait, Rust can’t figure ou
 implementation of <code>Animal::baby_name</code> we want. We’ll get this compiler error:</p>
 <pre><code class="language-console">$ cargo run
    Compiling traits-example v0.1.0 (file:///projects/traits-example)
-error[E0283]: type annotations needed
+error[E0790]: cannot call associated function on trait without specifying the corresponding `impl` type
   --&gt; src/main.rs:20:43
    |
+2  |     fn baby_name() -&gt; String;
+   |     ------------------------- `Animal::baby_name` defined here
+...
 20 |     println!(&quot;A baby dog is called a {}&quot;, Animal::baby_name());
-   |                                           ^^^^^^^^^^^^^^^^^ cannot infer type
+   |                                           ^^^^^^^^^^^^^^^^^ cannot call associated function of trait
    |
-   = note: cannot satisfy `_: Animal`
+help: use the fully-qualified path to the only available implementation
+   |
+20 |     println!(&quot;A baby dog is called a {}&quot;, &lt;::Dog as Animal&gt;::baby_name());
+   |                                           +++++++++       +
 
-For more information about this error, try `rustc --explain E0283`.
+For more information about this error, try `rustc --explain E0790`.
 error: could not compile `traits-example` due to previous error
 </code></pre>
 <p>To disambiguate and tell Rust that we want to use the implementation of
@@ -24732,7 +24770,7 @@ error[E0746]: return type cannot have an unboxed trait object
   |                         ^^^^^^^^^^^^^^^^^^ doesn't have a size known at compile-time
   |
   = note: for information on `impl Trait`, see &lt;https://doc.rust-lang.org/book/ch10-02-traits.html#returning-types-that-implement-traits&gt;
-help: use `impl Fn(i32) -&gt; i32` as the return type, as all return paths are of type `[closure@src/lib.rs:2:5: 2:14]`, which implements `Fn(i32) -&gt; i32`
+help: use `impl Fn(i32) -&gt; i32` as the return type, as all return paths are of type `[closure@src/lib.rs:2:5: 2:8]`, which implements `Fn(i32) -&gt; i32`
   |
 1 | fn returns_closure() -&gt; impl Fn(i32) -&gt; i32 {
   |                         ~~~~~~~~~~~~~~~~~~~
@@ -27143,13 +27181,13 @@ into an ungraceful shutdown.</p>
 <pre><code class="language-console">$ cargo check
     Checking hello v0.1.0 (file:///projects/hello)
 error[E0507]: cannot move out of `worker.thread` which is behind a mutable reference
-    --&gt; src/lib.rs:52:13
-     |
-52   |             worker.thread.join().unwrap();
-     |             ^^^^^^^^^^^^^ ------ `worker.thread` moved due to this method call
-     |             |
-     |             move occurs because `worker.thread` has type `JoinHandle&lt;()&gt;`, which does not implement the `Copy` trait
-     |
+  --&gt; src/lib.rs:52:13
+   |
+52 |             worker.thread.join().unwrap();
+   |             ^^^^^^^^^^^^^ ------ `worker.thread` moved due to this method call
+   |             |
+   |             move occurs because `worker.thread` has type `JoinHandle&lt;()&gt;`, which does not implement the `Copy` trait
+   |
 note: this function takes ownership of the receiver `self`, which moves `worker.thread`
 
 For more information about this error, try `rustc --explain E0507`.
@@ -27251,6 +27289,12 @@ error[E0599]: no method named `join` found for enum `Option` in the current scop
    |
 52 |             worker.thread.join().unwrap();
    |                           ^^^^ method not found in `Option&lt;JoinHandle&lt;()&gt;&gt;`
+   |
+note: the method `join` exists on the type `JoinHandle&lt;()&gt;`
+help: consider using `Option::expect` to unwrap the `JoinHandle&lt;()&gt;` value, panicking if the value is an `Option::None`
+   |
+52 |             worker.thread.expect(&quot;REASON&quot;).join().unwrap();
+   |                          +++++++++++++++++
 
 error[E0308]: mismatched types
   --&gt; src/lib.rs:72:22

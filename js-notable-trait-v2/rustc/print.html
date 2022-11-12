@@ -5663,7 +5663,7 @@ fn main() {
  --&gt; lint_example.rs:6:5
   |
 6 |     returns_result();
-  |     ^^^^^^^^^^^^^^^^^
+  |     ^^^^^^^^^^^^^^^^
   |
   = note: this `Result` may be an `Err` variant, which should be handled
   = note: `#[warn(unused_must_use)]` on by default
@@ -7411,6 +7411,7 @@ so Rustup may install the documentation for a similar tier 1 target instead.</p>
 <tr><td><a href="platform-support/android.html"><code>aarch64-linux-android</code></a></td><td style="text-align: center">✓</td><td>ARM64 Android</td></tr>
 <tr><td><code>aarch64-unknown-none-softfloat</code></td><td style="text-align: center">*</td><td>Bare ARM64, softfloat</td></tr>
 <tr><td><code>aarch64-unknown-none</code></td><td style="text-align: center">*</td><td>Bare ARM64, hardfloat</td></tr>
+<tr><td><a href="platform-support/unknown-uefi.html"><code>aarch64-unknown-uefi</code></a></td><td style="text-align: center">*</td><td>ARM64 UEFI</td></tr>
 <tr><td><a href="platform-support/android.html"><code>arm-linux-androideabi</code></a></td><td style="text-align: center">✓</td><td>ARMv7 Android</td></tr>
 <tr><td><code>arm-unknown-linux-musleabi</code></td><td style="text-align: center">✓</td><td>ARMv6 Linux with MUSL</td></tr>
 <tr><td><code>arm-unknown-linux-musleabihf</code></td><td style="text-align: center">✓</td><td>ARMv6 Linux with MUSL, hardfloat</td></tr>
@@ -7432,6 +7433,7 @@ so Rustup may install the documentation for a similar tier 1 target instead.</p>
 <tr><td><a href="platform-support/android.html"><code>i686-linux-android</code></a></td><td style="text-align: center">✓</td><td>32-bit x86 Android</td></tr>
 <tr><td><code>i686-unknown-freebsd</code></td><td style="text-align: center">✓</td><td>32-bit FreeBSD</td></tr>
 <tr><td><code>i686-unknown-linux-musl</code></td><td style="text-align: center">✓</td><td>32-bit Linux with MUSL</td></tr>
+<tr><td><a href="platform-support/unknown-uefi.html"><code>i686-unknown-uefi</code></a></td><td style="text-align: center">*</td><td>32-bit UEFI</td></tr>
 <tr><td><code>mips-unknown-linux-musl</code></td><td style="text-align: center">✓</td><td>MIPS Linux with MUSL</td></tr>
 <tr><td><code>mips64-unknown-linux-muslabi64</code></td><td style="text-align: center">✓</td><td>MIPS64 Linux, n64 ABI, MUSL</td></tr>
 <tr><td><code>mips64el-unknown-linux-muslabi64</code></td><td style="text-align: center">✓</td><td>MIPS64 (LE) Linux, n64 ABI, MUSL</td></tr>
@@ -7464,6 +7466,7 @@ so Rustup may install the documentation for a similar tier 1 target instead.</p>
 <tr><td><code>x86_64-unknown-linux-gnux32</code></td><td style="text-align: center">✓</td><td>64-bit Linux (x32 ABI) (kernel 4.15, glibc 2.27)</td></tr>
 <tr><td><a href="platform-support/x86_64-unknown-none.html"><code>x86_64-unknown-none</code></a></td><td style="text-align: center">*</td><td>Freestanding/bare-metal x86_64, softfloat</td></tr>
 <tr><td><code>x86_64-unknown-redox</code></td><td style="text-align: center">✓</td><td>Redox OS</td></tr>
+<tr><td><a href="platform-support/unknown-uefi.html"><code>x86_64-unknown-uefi</code></a></td><td style="text-align: center">*</td><td>64-bit UEFI</td></tr>
 </tbody></table>
 </div>
 <h2 id="tier-3"><a class="header" href="#tier-3">Tier 3</a></h2>
@@ -7489,7 +7492,6 @@ host tools.</p>
 <tr><td><a href="platform-support/pc-windows-gnullvm.html"><code>aarch64-pc-windows-gnullvm</code></a></td><td style="text-align: center">✓</td><td style="text-align: center">✓</td><td></td></tr>
 <tr><td><code>aarch64-unknown-freebsd</code></td><td style="text-align: center">✓</td><td style="text-align: center">✓</td><td>ARM64 FreeBSD</td></tr>
 <tr><td><code>aarch64-unknown-hermit</code></td><td style="text-align: center">✓</td><td style="text-align: center"></td><td>ARM64 HermitCore</td></tr>
-<tr><td><a href="platform-support/unknown-uefi.html"><code>aarch64-unknown-uefi</code></a></td><td style="text-align: center">*</td><td style="text-align: center"></td><td>ARM64 UEFI</td></tr>
 <tr><td><code>aarch64-unknown-linux-gnu_ilp32</code></td><td style="text-align: center">✓</td><td style="text-align: center">✓</td><td>ARM64 Linux (ILP32 ABI)</td></tr>
 <tr><td><code>aarch64-unknown-netbsd</code></td><td style="text-align: center">✓</td><td style="text-align: center">✓</td><td></td></tr>
 <tr><td><a href="platform-support/openbsd.html"><code>aarch64-unknown-openbsd</code></a></td><td style="text-align: center">✓</td><td style="text-align: center">✓</td><td>ARM64 OpenBSD</td></tr>
@@ -7528,7 +7530,6 @@ host tools.</p>
 <tr><td><code>i686-unknown-haiku</code></td><td style="text-align: center">✓</td><td style="text-align: center">✓</td><td>32-bit Haiku</td></tr>
 <tr><td><code>i686-unknown-netbsd</code></td><td style="text-align: center">✓</td><td style="text-align: center">✓</td><td>NetBSD/i386 with SSE2</td></tr>
 <tr><td><a href="platform-support/openbsd.html"><code>i686-unknown-openbsd</code></a></td><td style="text-align: center">✓</td><td style="text-align: center">✓</td><td>32-bit OpenBSD</td></tr>
-<tr><td><a href="platform-support/unknown-uefi.html"><code>i686-unknown-uefi</code></a></td><td style="text-align: center">*</td><td style="text-align: center"></td><td>32-bit UEFI</td></tr>
 <tr><td><code>i686-uwp-windows-gnu</code></td><td style="text-align: center">?</td><td style="text-align: center"></td><td></td></tr>
 <tr><td><code>i686-uwp-windows-msvc</code></td><td style="text-align: center">?</td><td style="text-align: center"></td><td></td></tr>
 <tr><td><code>i686-wrs-vxworks</code></td><td style="text-align: center">?</td><td style="text-align: center"></td><td></td></tr>
@@ -7585,9 +7586,7 @@ host tools.</p>
 <tr><td><code>x86_64-unknown-haiku</code></td><td style="text-align: center">✓</td><td style="text-align: center">✓</td><td>64-bit Haiku</td></tr>
 <tr><td><code>x86_64-unknown-hermit</code></td><td style="text-align: center">✓</td><td style="text-align: center"></td><td>HermitCore</td></tr>
 <tr><td><code>x86_64-unknown-l4re-uclibc</code></td><td style="text-align: center">?</td><td style="text-align: center"></td><td></td></tr>
-<tr><td><code>x86_64-unknown-none-linuxkernel</code></td><td style="text-align: center">*</td><td style="text-align: center"></td><td>Linux kernel modules</td></tr>
 <tr><td><a href="platform-support/openbsd.html"><code>x86_64-unknown-openbsd</code></a></td><td style="text-align: center">✓</td><td style="text-align: center">✓</td><td>64-bit OpenBSD</td></tr>
-<tr><td><a href="platform-support/unknown-uefi.html"><code>x86_64-unknown-uefi</code></a></td><td style="text-align: center">*</td><td style="text-align: center"></td><td>64-bit UEFI</td></tr>
 <tr><td><code>x86_64-uwp-windows-gnu</code></td><td style="text-align: center">✓</td><td style="text-align: center"></td><td></td></tr>
 <tr><td><code>x86_64-uwp-windows-msvc</code></td><td style="text-align: center">✓</td><td style="text-align: center"></td><td></td></tr>
 <tr><td><code>x86_64-wrs-vxworks</code></td><td style="text-align: center">?</td><td style="text-align: center"></td><td></td></tr>
@@ -9788,7 +9787,7 @@ cc = &quot;$ARCH-openbsd-cc&quot;
 <h2 id="building-rust-programs-15"><a class="header" href="#building-rust-programs-15">Building Rust programs</a></h2>
 <p>Rust does not yet ship pre-compiled artifacts for these targets.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="-unknown-uefi"><a class="header" href="#-unknown-uefi"><code>*-unknown-uefi</code></a></h1>
-<p><strong>Tier: 3</strong></p>
+<p><strong>Tier: 2</strong></p>
 <p>Unified Extensible Firmware Interface (UEFI) targets for application, driver,
 and core UEFI binaries.</p>
 <p>Available targets:</p>
@@ -9845,22 +9844,12 @@ build-stage = 1
 target = [&quot;x86_64-unknown-uefi&quot;]
 </code></pre>
 <h2 id="building-rust-programs-16"><a class="header" href="#building-rust-programs-16">Building Rust programs</a></h2>
-<p>Rust does not yet ship pre-compiled artifacts for this target. To compile for
-this target, you will either need to build Rust with the target enabled (see
-&quot;Building rust for UEFI targets&quot; above), or build your own copy of <code>core</code> by
-using <code>build-std</code>, <code>cargo-buildx</code>, or similar.</p>
-<p>A native build with the unstable <code>build-std</code>-feature can be achieved via:</p>
-<pre><code class="language-sh">cargo +nightly build \
-    -Zbuild-std=core,compiler_builtins \
-    -Zbuild-std-features=compiler-builtins-mem \
-    --target x86_64-unknown-uefi
-</code></pre>
-<p>Alternatively, you can install <code>cargo-xbuild</code> via
-<code>cargo install --force cargo-xbuild</code> and build for the UEFI targets via:</p>
-<pre><code class="language-sh">cargo \
-    +nightly \
-    xbuild \
-    --target x86_64-unknown-uefi
+<p>Starting with Rust 1.67, precompiled artifacts are provided via
+<code>rustup</code>. For example, to use <code>x86_64-unknown-uefi</code>:</p>
+<pre><code class="language-sh"># install cross-compile toolchain
+rustup target add x86_64-unknown-uefi
+# target flag may be used with any cargo or rustc command
+cargo build --target x86_64-unknown-uefi
 </code></pre>
 <h2 id="testing-15"><a class="header" href="#testing-15">Testing</a></h2>
 <p>UEFI applications can be copied into the ESP on any UEFI system and executed
@@ -9926,15 +9915,8 @@ UEFI applications in an emulated <code>x86_64</code> machine.</li>
 <p>The following code is a valid UEFI application returning immediately upon
 execution with an exit code of 0. A panic handler is provided. This is executed
 by rust on panic. For simplicity, we simply end up in an infinite loop.</p>
-<p>Note that as of rust-1.31.0, all features used here are stabilized. No unstable
-features are required, nor do we rely on nightly compilers. However, if you do
-not compile rustc for the UEFI targets, you need a nightly compiler to support
-the <code>-Z build-std</code> flag.</p>
 <p>This example can be compiled as binary crate via <code>cargo</code>:</p>
-<pre><code class="language-sh">cargo +nightly build \
-    -Zbuild-std=core,compiler_builtins \
-    -Zbuild-std-features=compiler-builtins-mem \
-    --target x86_64-unknown-uefi
+<pre><code class="language-sh">cargo build --target x86_64-unknown-uefi
 </code></pre>
 <pre><code class="language-rust ignore (platform-specific eh-personality-is-unstable)">#![no_main]
 #![no_std]
@@ -10702,24 +10684,47 @@ set AR=llvm-lib
 you may run into issues with some crates that compile code with separate cargo invocations. You should be
 able to get around this problem by setting <code>-Clinker=lld-link</code> in RUSTFLAGS</p>
 <h2 id="toolchain-compatibility"><a class="header" href="#toolchain-compatibility">Toolchain Compatibility</a></h2>
-<!-- NOTE: to update the below table, you can use this shell script:
+<!-- NOTE: to update the below table, you can use this Python script:
 
-```sh
-rustup toolchain install --profile minimal nightly
-MINOR_VERSION=$(rustc +nightly --version | cut -d . -f 2)
-LOWER_BOUND=61
+```python
+from collections import defaultdict
+import subprocess
 
-llvm_version() {
-    toolchain="$1"
-    printf "Rust $toolchain    |    Clang "
-    rustc +"$toolchain" -Vv | grep LLVM | cut -d ':' -f 2 | tr -d ' '
-}
+def minor_version(version):
+    return int(version.split('.')[1])
 
-for version in `seq $LOWER_BOUND $((MINOR_VERSION - 2))`; do
-    toolchain=1.$version.0
-    rustup toolchain install --no-self-update --profile  minimal $toolchain >/dev/null 2>&1
-    llvm_version $toolchain
-done
+INSTALL_TOOLCHAIN = ["rustup", "toolchain", "install", "--profile", "minimal"]
+subprocess.run(INSTALL_TOOLCHAIN + ["nightly"])
+
+LOWER_BOUND = 65
+NIGHTLY_VERSION = minor_version(subprocess.run(
+    ["rustc", "+nightly", "--version"],
+    capture_output=True,
+    text=True).stdout)
+
+def llvm_version(toolchain):
+    version_text = subprocess.run(
+        ["rustc", "+{}".format(toolchain), "-Vv"],
+        capture_output=True,
+        text=True).stdout
+    return int(version_text.split("LLVM")[1].split(':')[1].split('.')[0])
+
+version_map = defaultdict(lambda: [])
+for version in range(LOWER_BOUND, NIGHTLY_VERSION - 1):
+    toolchain = "1.{}.0".format(version)
+    subprocess.run(
+        INSTALL_TOOLCHAIN + ["--no-self-update", toolchain],
+        capture_output=True)
+    version_map[llvm_version(toolchain)].append(version)
+
+print("| Rust Version | Clang Version |")
+print("|--------------|---------------|")
+for clang, rust in sorted(version_map.items()):
+    if len(rust) > 1:
+        rust_range = "1.{} - 1.{}".format(rust[0], rust[-1])
+    else:
+        rust_range = "1.{}       ".format(rust[0])
+    print("| {}  |      {}       |".format(rust_range, clang))
 ```
 
 -->
@@ -10732,33 +10737,14 @@ here is only an approximation as Rust sometimes uses unstable revisions of
 LLVM. However, the approximation is usually reliable.</p>
 <p>The following table shows known good combinations of toolchain versions.</p>
 <div class="table-wrapper"><table><thead><tr><th>Rust Version</th><th>Clang Version</th></tr></thead><tbody>
-<tr><td>Rust 1.34</td><td>Clang 8</td></tr>
-<tr><td>Rust 1.35</td><td>Clang 8</td></tr>
-<tr><td>Rust 1.36</td><td>Clang 8</td></tr>
-<tr><td>Rust 1.37</td><td>Clang 8</td></tr>
-<tr><td>Rust 1.38</td><td>Clang 9</td></tr>
-<tr><td>Rust 1.39</td><td>Clang 9</td></tr>
-<tr><td>Rust 1.40</td><td>Clang 9</td></tr>
-<tr><td>Rust 1.41</td><td>Clang 9</td></tr>
-<tr><td>Rust 1.42</td><td>Clang 9</td></tr>
-<tr><td>Rust 1.43</td><td>Clang 9</td></tr>
-<tr><td>Rust 1.44</td><td>Clang 9</td></tr>
-<tr><td>Rust 1.45</td><td>Clang 10</td></tr>
-<tr><td>Rust 1.46</td><td>Clang 10</td></tr>
-<tr><td>Rust 1.47</td><td>Clang 11</td></tr>
-<tr><td>Rust 1.48</td><td>Clang 11</td></tr>
-<tr><td>Rust 1.49</td><td>Clang 11</td></tr>
-<tr><td>Rust 1.50</td><td>Clang 11</td></tr>
-<tr><td>Rust 1.51</td><td>Clang 11</td></tr>
-<tr><td>Rust 1.52</td><td>Clang 12</td></tr>
-<tr><td>Rust 1.53</td><td>Clang 12</td></tr>
-<tr><td>Rust 1.54</td><td>Clang 12</td></tr>
-<tr><td>Rust 1.55</td><td>Clang 12</td></tr>
-<tr><td>Rust 1.56</td><td>Clang 13</td></tr>
-<tr><td>Rust 1.57</td><td>Clang 13</td></tr>
-<tr><td>Rust 1.58</td><td>Clang 13</td></tr>
-<tr><td>Rust 1.59</td><td>Clang 13</td></tr>
-<tr><td>Rust 1.60</td><td>Clang 14</td></tr>
+<tr><td>1.34 - 1.37</td><td>8</td></tr>
+<tr><td>1.38 - 1.44</td><td>9</td></tr>
+<tr><td>1.45 - 1.46</td><td>10</td></tr>
+<tr><td>1.47 - 1.51</td><td>11</td></tr>
+<tr><td>1.52 - 1.55</td><td>12</td></tr>
+<tr><td>1.56 - 1.59</td><td>13</td></tr>
+<tr><td>1.60 - 1.64</td><td>14</td></tr>
+<tr><td>1.65</td><td>15</td></tr>
 </tbody></table>
 </div>
 <p>Note that the compatibility policy for this feature might change in the future.</p>

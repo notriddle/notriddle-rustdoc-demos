@@ -253,6 +253,7 @@ so Rustup may install the documentation for a similar tier 1 target instead.</p>
 <tr><td><a href="platform-support/android.html"><code>aarch64-linux-android</code></a></td><td style="text-align: center">✓</td><td>ARM64 Android</td></tr>
 <tr><td><code>aarch64-unknown-none-softfloat</code></td><td style="text-align: center">*</td><td>Bare ARM64, softfloat</td></tr>
 <tr><td><code>aarch64-unknown-none</code></td><td style="text-align: center">*</td><td>Bare ARM64, hardfloat</td></tr>
+<tr><td><a href="platform-support/unknown-uefi.html"><code>aarch64-unknown-uefi</code></a></td><td style="text-align: center">*</td><td>ARM64 UEFI</td></tr>
 <tr><td><a href="platform-support/android.html"><code>arm-linux-androideabi</code></a></td><td style="text-align: center">✓</td><td>ARMv7 Android</td></tr>
 <tr><td><code>arm-unknown-linux-musleabi</code></td><td style="text-align: center">✓</td><td>ARMv6 Linux with MUSL</td></tr>
 <tr><td><code>arm-unknown-linux-musleabihf</code></td><td style="text-align: center">✓</td><td>ARMv6 Linux with MUSL, hardfloat</td></tr>
@@ -274,6 +275,7 @@ so Rustup may install the documentation for a similar tier 1 target instead.</p>
 <tr><td><a href="platform-support/android.html"><code>i686-linux-android</code></a></td><td style="text-align: center">✓</td><td>32-bit x86 Android</td></tr>
 <tr><td><code>i686-unknown-freebsd</code></td><td style="text-align: center">✓</td><td>32-bit FreeBSD</td></tr>
 <tr><td><code>i686-unknown-linux-musl</code></td><td style="text-align: center">✓</td><td>32-bit Linux with MUSL</td></tr>
+<tr><td><a href="platform-support/unknown-uefi.html"><code>i686-unknown-uefi</code></a></td><td style="text-align: center">*</td><td>32-bit UEFI</td></tr>
 <tr><td><code>mips-unknown-linux-musl</code></td><td style="text-align: center">✓</td><td>MIPS Linux with MUSL</td></tr>
 <tr><td><code>mips64-unknown-linux-muslabi64</code></td><td style="text-align: center">✓</td><td>MIPS64 Linux, n64 ABI, MUSL</td></tr>
 <tr><td><code>mips64el-unknown-linux-muslabi64</code></td><td style="text-align: center">✓</td><td>MIPS64 (LE) Linux, n64 ABI, MUSL</td></tr>
@@ -306,6 +308,7 @@ so Rustup may install the documentation for a similar tier 1 target instead.</p>
 <tr><td><code>x86_64-unknown-linux-gnux32</code></td><td style="text-align: center">✓</td><td>64-bit Linux (x32 ABI) (kernel 4.15, glibc 2.27)</td></tr>
 <tr><td><a href="platform-support/x86_64-unknown-none.html"><code>x86_64-unknown-none</code></a></td><td style="text-align: center">*</td><td>Freestanding/bare-metal x86_64, softfloat</td></tr>
 <tr><td><code>x86_64-unknown-redox</code></td><td style="text-align: center">✓</td><td>Redox OS</td></tr>
+<tr><td><a href="platform-support/unknown-uefi.html"><code>x86_64-unknown-uefi</code></a></td><td style="text-align: center">*</td><td>64-bit UEFI</td></tr>
 </tbody></table>
 </div>
 <h2 id="tier-3"><a class="header" href="#tier-3">Tier 3</a></h2>
@@ -331,7 +334,6 @@ host tools.</p>
 <tr><td><a href="platform-support/pc-windows-gnullvm.html"><code>aarch64-pc-windows-gnullvm</code></a></td><td style="text-align: center">✓</td><td style="text-align: center">✓</td><td></td></tr>
 <tr><td><code>aarch64-unknown-freebsd</code></td><td style="text-align: center">✓</td><td style="text-align: center">✓</td><td>ARM64 FreeBSD</td></tr>
 <tr><td><code>aarch64-unknown-hermit</code></td><td style="text-align: center">✓</td><td style="text-align: center"></td><td>ARM64 HermitCore</td></tr>
-<tr><td><a href="platform-support/unknown-uefi.html"><code>aarch64-unknown-uefi</code></a></td><td style="text-align: center">*</td><td style="text-align: center"></td><td>ARM64 UEFI</td></tr>
 <tr><td><code>aarch64-unknown-linux-gnu_ilp32</code></td><td style="text-align: center">✓</td><td style="text-align: center">✓</td><td>ARM64 Linux (ILP32 ABI)</td></tr>
 <tr><td><code>aarch64-unknown-netbsd</code></td><td style="text-align: center">✓</td><td style="text-align: center">✓</td><td></td></tr>
 <tr><td><a href="platform-support/openbsd.html"><code>aarch64-unknown-openbsd</code></a></td><td style="text-align: center">✓</td><td style="text-align: center">✓</td><td>ARM64 OpenBSD</td></tr>
@@ -370,7 +372,6 @@ host tools.</p>
 <tr><td><code>i686-unknown-haiku</code></td><td style="text-align: center">✓</td><td style="text-align: center">✓</td><td>32-bit Haiku</td></tr>
 <tr><td><code>i686-unknown-netbsd</code></td><td style="text-align: center">✓</td><td style="text-align: center">✓</td><td>NetBSD/i386 with SSE2</td></tr>
 <tr><td><a href="platform-support/openbsd.html"><code>i686-unknown-openbsd</code></a></td><td style="text-align: center">✓</td><td style="text-align: center">✓</td><td>32-bit OpenBSD</td></tr>
-<tr><td><a href="platform-support/unknown-uefi.html"><code>i686-unknown-uefi</code></a></td><td style="text-align: center">*</td><td style="text-align: center"></td><td>32-bit UEFI</td></tr>
 <tr><td><code>i686-uwp-windows-gnu</code></td><td style="text-align: center">?</td><td style="text-align: center"></td><td></td></tr>
 <tr><td><code>i686-uwp-windows-msvc</code></td><td style="text-align: center">?</td><td style="text-align: center"></td><td></td></tr>
 <tr><td><code>i686-wrs-vxworks</code></td><td style="text-align: center">?</td><td style="text-align: center"></td><td></td></tr>
@@ -427,9 +428,7 @@ host tools.</p>
 <tr><td><code>x86_64-unknown-haiku</code></td><td style="text-align: center">✓</td><td style="text-align: center">✓</td><td>64-bit Haiku</td></tr>
 <tr><td><code>x86_64-unknown-hermit</code></td><td style="text-align: center">✓</td><td style="text-align: center"></td><td>HermitCore</td></tr>
 <tr><td><code>x86_64-unknown-l4re-uclibc</code></td><td style="text-align: center">?</td><td style="text-align: center"></td><td></td></tr>
-<tr><td><code>x86_64-unknown-none-linuxkernel</code></td><td style="text-align: center">*</td><td style="text-align: center"></td><td>Linux kernel modules</td></tr>
 <tr><td><a href="platform-support/openbsd.html"><code>x86_64-unknown-openbsd</code></a></td><td style="text-align: center">✓</td><td style="text-align: center">✓</td><td>64-bit OpenBSD</td></tr>
-<tr><td><a href="platform-support/unknown-uefi.html"><code>x86_64-unknown-uefi</code></a></td><td style="text-align: center">*</td><td style="text-align: center"></td><td>64-bit UEFI</td></tr>
 <tr><td><code>x86_64-uwp-windows-gnu</code></td><td style="text-align: center">✓</td><td style="text-align: center"></td><td></td></tr>
 <tr><td><code>x86_64-uwp-windows-msvc</code></td><td style="text-align: center">✓</td><td style="text-align: center"></td><td></td></tr>
 <tr><td><code>x86_64-wrs-vxworks</code></td><td style="text-align: center">?</td><td style="text-align: center"></td><td></td></tr>

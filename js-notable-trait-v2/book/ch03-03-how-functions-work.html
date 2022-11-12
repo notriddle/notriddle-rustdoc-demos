@@ -281,6 +281,12 @@ to another variable, as the following code tries to do; you’ll get an error:</
 <p>When you run this program, the error you’ll get looks like this:</p>
 <pre><code class="language-console">$ cargo run
    Compiling functions v0.1.0 (file:///projects/functions)
+error: expected expression, found `let` statement
+ --&gt; src/main.rs:2:14
+  |
+2 |     let x = (let y = 6);
+  |              ^^^
+
 error: expected expression, found statement (`let`)
  --&gt; src/main.rs:2:14
   |
@@ -308,11 +314,11 @@ help: remove these parentheses
   |
 2 -     let x = (let y = 6);
 2 +     let x = let y = 6;
-  | 
+  |
 
 For more information about this error, try `rustc --explain E0658`.
 warning: `functions` (bin &quot;functions&quot;) generated 1 warning
-error: could not compile `functions` due to 2 previous errors; 1 warning emitted
+error: could not compile `functions` due to 3 previous errors; 1 warning emitted
 </code></pre>
 <p>The <code>let y = 6</code> statement does not return a value, so there isn’t anything for
 <code>x</code> to bind to. This is different from what happens in other languages, such as

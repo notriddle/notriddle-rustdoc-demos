@@ -1498,7 +1498,7 @@ fn main() {
     let integer = decimal as u8;
     let character = integer as char;
 
-    // Error! There are limitations in conversion rules. 
+    // Error! There are limitations in conversion rules.
     // A float cannot be directly converted to a char.
     let character = decimal as char;
     // FIXME ^ Comment out this line
@@ -1528,7 +1528,7 @@ fn main() {
 
     // Unless it already fits, of course.
     println!(&quot; 128 as a i16 is: {}&quot;, 128 as i16);
-    
+
     // 128 as u8 -&gt; 128, whose value in 8-bit two's complement representation is:
     println!(&quot; 128 as a i8 is : {}&quot;, 128 as i8);
 
@@ -1537,21 +1537,21 @@ fn main() {
     println!(&quot;1000 as a u8 is : {}&quot;, 1000 as u8);
     // and the value of 232 in 8-bit two's complement representation is -24
     println!(&quot; 232 as a i8 is : {}&quot;, 232 as i8);
-    
-    // Since Rust 1.45, the `as` keyword performs a *saturating cast* 
-    // when casting from float to int. If the floating point value exceeds 
-    // the upper bound or is less than the lower bound, the returned value 
+
+    // Since Rust 1.45, the `as` keyword performs a *saturating cast*
+    // when casting from float to int. If the floating point value exceeds
+    // the upper bound or is less than the lower bound, the returned value
     // will be equal to the bound crossed.
-    
+
     // 300.0 as u8 is 255
     println!(&quot; 300.0 as u8 is : {}&quot;, 300.0_f32 as u8);
     // -100.0 as u8 is 0
     println!(&quot;-100.0 as u8 is : {}&quot;, -100.0_f32 as u8);
     // nan as u8 is 0
     println!(&quot;   nan as u8 is : {}&quot;, f32::NAN as u8);
-    
-    // This behavior incurs a small runtime cost and can be avoided 
-    // with unsafe methods, however the results might overflow and 
+
+    // This behavior incurs a small runtime cost and can be avoided
+    // with unsafe methods, however the results might overflow and
     // return **unsound values**. Use these methods wisely:
     unsafe {
         // 300.0 as u8 is 44
@@ -2895,7 +2895,7 @@ closure.</p>
 <p>This is because if a move is possible, then any type of borrow should also
 be possible. Note that the reverse is not true. If the parameter is
 annotated as <code>Fn</code>, then capturing variables by <code>&amp;mut T</code> or <code>T</code> are not
-allowed.</p>
+allowed. However, <code>&amp;T</code> is allowed.</p>
 <p>In the following example, try swapping the usage of <code>Fn</code>, <code>FnMut</code>, and
 <code>FnOnce</code> to see what happens:</p>
 <pre><pre class="playground"><code class="language-rust editable edition2021">// A function which takes a closure as an argument and calls it.
@@ -3690,7 +3690,7 @@ fn main() {
 </code></pre>
 <pre><code class="language-txt"># Where library.rlib is the path to the compiled library, assumed that it's
 # in the same directory here:
-$ rustc executable.rs --extern rary=library.rlib --edition=2018 &amp;&amp; ./executable 
+$ rustc executable.rs --extern rary=library.rlib &amp;&amp; ./executable 
 called rary's `public_function()`
 called rary's `indirect_access()`, that
 &gt; called rary's `private_function()`

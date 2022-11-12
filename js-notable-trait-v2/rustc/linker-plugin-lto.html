@@ -241,24 +241,47 @@ set AR=llvm-lib
 you may run into issues with some crates that compile code with separate cargo invocations. You should be
 able to get around this problem by setting <code>-Clinker=lld-link</code> in RUSTFLAGS</p>
 <h2 id="toolchain-compatibility"><a class="header" href="#toolchain-compatibility">Toolchain Compatibility</a></h2>
-<!-- NOTE: to update the below table, you can use this shell script:
+<!-- NOTE: to update the below table, you can use this Python script:
 
-```sh
-rustup toolchain install --profile minimal nightly
-MINOR_VERSION=$(rustc +nightly --version | cut -d . -f 2)
-LOWER_BOUND=61
+```python
+from collections import defaultdict
+import subprocess
 
-llvm_version() {
-    toolchain="$1"
-    printf "Rust $toolchain    |    Clang "
-    rustc +"$toolchain" -Vv | grep LLVM | cut -d ':' -f 2 | tr -d ' '
-}
+def minor_version(version):
+    return int(version.split('.')[1])
 
-for version in `seq $LOWER_BOUND $((MINOR_VERSION - 2))`; do
-    toolchain=1.$version.0
-    rustup toolchain install --no-self-update --profile  minimal $toolchain >/dev/null 2>&1
-    llvm_version $toolchain
-done
+INSTALL_TOOLCHAIN = ["rustup", "toolchain", "install", "--profile", "minimal"]
+subprocess.run(INSTALL_TOOLCHAIN + ["nightly"])
+
+LOWER_BOUND = 65
+NIGHTLY_VERSION = minor_version(subprocess.run(
+    ["rustc", "+nightly", "--version"],
+    capture_output=True,
+    text=True).stdout)
+
+def llvm_version(toolchain):
+    version_text = subprocess.run(
+        ["rustc", "+{}".format(toolchain), "-Vv"],
+        capture_output=True,
+        text=True).stdout
+    return int(version_text.split("LLVM")[1].split(':')[1].split('.')[0])
+
+version_map = defaultdict(lambda: [])
+for version in range(LOWER_BOUND, NIGHTLY_VERSION - 1):
+    toolchain = "1.{}.0".format(version)
+    subprocess.run(
+        INSTALL_TOOLCHAIN + ["--no-self-update", toolchain],
+        capture_output=True)
+    version_map[llvm_version(toolchain)].append(version)
+
+print("| Rust Version | Clang Version |")
+print("|--------------|---------------|")
+for clang, rust in sorted(version_map.items()):
+    if len(rust) > 1:
+        rust_range = "1.{} - 1.{}".format(rust[0], rust[-1])
+    else:
+        rust_range = "1.{}       ".format(rust[0])
+    print("| {}  |      {}       |".format(rust_range, clang))
 ```
 
 -->
@@ -271,33 +294,14 @@ here is only an approximation as Rust sometimes uses unstable revisions of
 LLVM. However, the approximation is usually reliable.</p>
 <p>The following table shows known good combinations of toolchain versions.</p>
 <div class="table-wrapper"><table><thead><tr><th>Rust Version</th><th>Clang Version</th></tr></thead><tbody>
-<tr><td>Rust 1.34</td><td>Clang 8</td></tr>
-<tr><td>Rust 1.35</td><td>Clang 8</td></tr>
-<tr><td>Rust 1.36</td><td>Clang 8</td></tr>
-<tr><td>Rust 1.37</td><td>Clang 8</td></tr>
-<tr><td>Rust 1.38</td><td>Clang 9</td></tr>
-<tr><td>Rust 1.39</td><td>Clang 9</td></tr>
-<tr><td>Rust 1.40</td><td>Clang 9</td></tr>
-<tr><td>Rust 1.41</td><td>Clang 9</td></tr>
-<tr><td>Rust 1.42</td><td>Clang 9</td></tr>
-<tr><td>Rust 1.43</td><td>Clang 9</td></tr>
-<tr><td>Rust 1.44</td><td>Clang 9</td></tr>
-<tr><td>Rust 1.45</td><td>Clang 10</td></tr>
-<tr><td>Rust 1.46</td><td>Clang 10</td></tr>
-<tr><td>Rust 1.47</td><td>Clang 11</td></tr>
-<tr><td>Rust 1.48</td><td>Clang 11</td></tr>
-<tr><td>Rust 1.49</td><td>Clang 11</td></tr>
-<tr><td>Rust 1.50</td><td>Clang 11</td></tr>
-<tr><td>Rust 1.51</td><td>Clang 11</td></tr>
-<tr><td>Rust 1.52</td><td>Clang 12</td></tr>
-<tr><td>Rust 1.53</td><td>Clang 12</td></tr>
-<tr><td>Rust 1.54</td><td>Clang 12</td></tr>
-<tr><td>Rust 1.55</td><td>Clang 12</td></tr>
-<tr><td>Rust 1.56</td><td>Clang 13</td></tr>
-<tr><td>Rust 1.57</td><td>Clang 13</td></tr>
-<tr><td>Rust 1.58</td><td>Clang 13</td></tr>
-<tr><td>Rust 1.59</td><td>Clang 13</td></tr>
-<tr><td>Rust 1.60</td><td>Clang 14</td></tr>
+<tr><td>1.34 - 1.37</td><td>8</td></tr>
+<tr><td>1.38 - 1.44</td><td>9</td></tr>
+<tr><td>1.45 - 1.46</td><td>10</td></tr>
+<tr><td>1.47 - 1.51</td><td>11</td></tr>
+<tr><td>1.52 - 1.55</td><td>12</td></tr>
+<tr><td>1.56 - 1.59</td><td>13</td></tr>
+<tr><td>1.60 - 1.64</td><td>14</td></tr>
+<tr><td>1.65</td><td>15</td></tr>
 </tbody></table>
 </div>
 <p>Note that the compatibility policy for this feature might change in the future.</p>

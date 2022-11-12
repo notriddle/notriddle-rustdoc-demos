@@ -166,7 +166,7 @@ closure.</p>
 <p>This is because if a move is possible, then any type of borrow should also
 be possible. Note that the reverse is not true. If the parameter is
 annotated as <code>Fn</code>, then capturing variables by <code>&amp;mut T</code> or <code>T</code> are not
-allowed.</p>
+allowed. However, <code>&amp;T</code> is allowed.</p>
 <p>In the following example, try swapping the usage of <code>Fn</code>, <code>FnMut</code>, and
 <code>FnOnce</code> to see what happens:</p>
 <pre><pre class="playground"><code class="language-rust editable edition2021">// A function which takes a closure as an argument and calls it.

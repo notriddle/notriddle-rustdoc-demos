@@ -162,7 +162,7 @@ fn main() {
 </code></pre>
 <pre><code class="language-txt"># Where library.rlib is the path to the compiled library, assumed that it's
 # in the same directory here:
-$ rustc executable.rs --extern rary=library.rlib --edition=2018 &amp;&amp; ./executable 
+$ rustc executable.rs --extern rary=library.rlib &amp;&amp; ./executable 
 called rary's `public_function()`
 called rary's `indirect_access()`, that
 &gt; called rary's `private_function()`

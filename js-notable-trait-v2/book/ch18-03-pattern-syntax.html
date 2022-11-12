@@ -379,16 +379,14 @@ fn main() {
             println!(&quot;The Quit variant has no data to destructure.&quot;);
         }
         Message::Move { x, y } =&gt; {
-            println!(
-                &quot;Move in the x direction {x} and in the y direction {y}&quot;
-            );
+            println!(&quot;Move in the x direction {x} and in the y direction {y}&quot;);
         }
         Message::Write(text) =&gt; {
             println!(&quot;Text message: {text}&quot;);
         }
-        Message::ChangeColor(r, g, b) =&gt; println!(
-            &quot;Change the color to red {r}, green {g}, and blue {b}&quot;,
-        ),
+        Message::ChangeColor(r, g, b) =&gt; {
+            println!(&quot;Change the color to red {r}, green {g}, and blue {b}&quot;,)
+        }
     }
 }
 </code></pre></pre>
@@ -433,9 +431,9 @@ fn main() {
         Message::ChangeColor(Color::Rgb(r, g, b)) =&gt; {
             println!(&quot;Change color to red {r}, green {g}, and blue {b}&quot;);
         }
-        Message::ChangeColor(Color::Hsv(h, s, v)) =&gt; println!(
-            &quot;Change color to hue {h}, saturation {s}, value {v}&quot;
-        ),
+        Message::ChangeColor(Color::Hsv(h, s, v)) =&gt; {
+            println!(&quot;Change color to hue {h}, saturation {s}, value {v}&quot;)
+        }
         _ =&gt; (),
     }
 }

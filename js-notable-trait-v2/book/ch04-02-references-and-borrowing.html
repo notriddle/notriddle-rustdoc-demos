@@ -296,7 +296,7 @@ error[E0499]: cannot borrow `s` as mutable more than once at a time
   |              ------ first mutable borrow occurs here
 5 |     let r2 = &amp;mut s;
   |              ^^^^^^ second mutable borrow occurs here
-6 | 
+6 |
 7 |     println!(&quot;{}, {}&quot;, r1, r2);
   |                        -- first borrow later used here
 
@@ -357,7 +357,7 @@ error[E0502]: cannot borrow `s` as mutable because it is also borrowed as immuta
 5 |     let r2 = &amp;s; // no problem
 6 |     let r3 = &amp;mut s; // BIG PROBLEM
   |              ^^^^^^ mutable borrow occurs here
-7 | 
+7 |
 8 |     println!(&quot;{}, {}, and {}&quot;, r1, r2, r3);
   |                                -- immutable borrow later used here
 
@@ -429,7 +429,7 @@ error[E0106]: missing lifetime specifier
 help: consider using the `'static` lifetime
   |
 5 | fn dangle() -&gt; &amp;'static String {
-  |                ~~~~~~~~
+  |                 +++++++
 
 For more information about this error, try `rustc --explain E0106`.
 error: could not compile `ownership` due to previous error

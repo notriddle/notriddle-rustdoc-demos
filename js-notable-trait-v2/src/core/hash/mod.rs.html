@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `library/core/src/hash/mod.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>mod.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-1f7d512b176f0f72.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Bold-124a1ca42af929b6.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-36468869ec48571b.css" id="mainThemeStyle"><link rel="stylesheet" id="themeStyle" href="../../../static.files/light-98c0ebf02d140783.css"><link rel="stylesheet" disabled href="../../../static.files/dark-46b2656921470ad6.css"><link rel="stylesheet" disabled href="../../../static.files/ayu-8e27f0d29a45e164.css"><script id="default-settings" ></script><script src="../../../static.files/storage-d43fa987303ecbbb.js"></script><script defer src="../../../static.files/source-script-74087aa2e88f4475.js"></script><script defer src="../../../source-files1.67.0.js"></script><script defer src="../../../static.files/main-452d4e3a3daab5cf.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-13285aec31fa243e.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><div class="width-limiter"><nav class="sub"><a class="sub-logo-container" href="../../../core/index.html"><img class="rust-logo" src="../../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-5ec35bf9ca753509.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><span id="1">1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `library/core/src/hash/mod.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>mod.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-1f7d512b176f0f72.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Bold-124a1ca42af929b6.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-ab80635a7857b61c.css" id="mainThemeStyle"><link rel="stylesheet" id="themeStyle" href="../../../static.files/light-92501962e11dab74.css"><link rel="stylesheet" disabled href="../../../static.files/dark-d06bb2f91c9aa13b.css"><link rel="stylesheet" disabled href="../../../static.files/ayu-0d8a72e6f6297723.css"><script id="default-settings" ></script><script src="../../../static.files/storage-d43fa987303ecbbb.js"></script><script defer src="../../../static.files/source-script-74087aa2e88f4475.js"></script><script defer src="../../../source-files1.67.0.js"></script><script defer src="../../../static.files/main-d8eba36609e23bfc.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-13285aec31fa243e.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><div class="width-limiter"><nav class="sub"><a class="sub-logo-container" href="../../../core/index.html"><img class="rust-logo" src="../../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-5ec35bf9ca753509.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><span id="1">1</span>
 <span id="2">2</span>
 <span id="3">3</span>
 <span id="4">4</span>
@@ -976,6 +976,35 @@
 <span id="976">976</span>
 <span id="977">977</span>
 <span id="978">978</span>
+<span id="979">979</span>
+<span id="980">980</span>
+<span id="981">981</span>
+<span id="982">982</span>
+<span id="983">983</span>
+<span id="984">984</span>
+<span id="985">985</span>
+<span id="986">986</span>
+<span id="987">987</span>
+<span id="988">988</span>
+<span id="989">989</span>
+<span id="990">990</span>
+<span id="991">991</span>
+<span id="992">992</span>
+<span id="993">993</span>
+<span id="994">994</span>
+<span id="995">995</span>
+<span id="996">996</span>
+<span id="997">997</span>
+<span id="998">998</span>
+<span id="999">999</span>
+<span id="1000">1000</span>
+<span id="1001">1001</span>
+<span id="1002">1002</span>
+<span id="1003">1003</span>
+<span id="1004">1004</span>
+<span id="1005">1005</span>
+<span id="1006">1006</span>
+<span id="1007">1007</span>
 </pre><pre class="rust"><code><span class="doccomment">//! Generic hashing support.
 //!
 //! This module provides a generic way to compute the [hash] of a value.
@@ -1064,7 +1093,8 @@
 </span><span class="attr">#![stable(feature = <span class="string">&quot;rust1&quot;</span>, since = <span class="string">&quot;1.0.0&quot;</span>)]
 
 </span><span class="kw">use </span><span class="kw">crate</span>::fmt;
-<span class="kw">use </span><span class="kw">crate</span>::marker;
+<span class="kw">use </span><span class="kw">crate</span>::intrinsics::const_eval_select;
+<span class="kw">use </span><span class="kw">crate</span>::marker::{<span class="self">self</span>, Destruct};
 
 <span class="attr">#[stable(feature = <span class="string">&quot;rust1&quot;</span>, since = <span class="string">&quot;1.0.0&quot;</span>)]
 #[allow(deprecated)]
@@ -1161,6 +1191,7 @@
 /// [impl]: ../../std/primitive.str.html#impl-Hash-for-str
 </span><span class="attr">#[stable(feature = <span class="string">&quot;rust1&quot;</span>, since = <span class="string">&quot;1.0.0&quot;</span>)]
 #[rustc_diagnostic_item = <span class="string">&quot;Hash&quot;</span>]
+#[const_trait]
 </span><span class="kw">pub trait </span>Hash {
     <span class="doccomment">/// Feeds this value into the given [`Hasher`].
     ///
@@ -1212,13 +1243,25 @@
     /// [`hash`]: Hash::hash
     /// [`hash_slice`]: Hash::hash_slice
     </span><span class="attr">#[stable(feature = <span class="string">&quot;hash_slice&quot;</span>, since = <span class="string">&quot;1.3.0&quot;</span>)]
-    </span><span class="kw">fn </span>hash_slice&lt;H: Hasher&gt;(data: <span class="kw-2">&amp;</span>[<span class="self">Self</span>], state: <span class="kw-2">&amp;mut </span>H)
+    </span><span class="kw">fn </span>hash_slice&lt;H: ~<span class="kw">const </span>Hasher&gt;(data: <span class="kw-2">&amp;</span>[<span class="self">Self</span>], state: <span class="kw-2">&amp;mut </span>H)
     <span class="kw">where
         </span><span class="self">Self</span>: Sized,
     {
-        <span class="kw">for </span>piece <span class="kw">in </span>data {
-            piece.hash(state);
+        <span class="comment">//FIXME(const_trait_impl): revert to only a for loop
+        </span><span class="kw">fn </span>rt&lt;T: Hash, H: Hasher&gt;(data: <span class="kw-2">&amp;</span>[T], state: <span class="kw-2">&amp;mut </span>H) {
+            <span class="kw">for </span>piece <span class="kw">in </span>data {
+                piece.hash(state)
+            }
         }
+        <span class="kw">const fn </span>ct&lt;T: ~<span class="kw">const </span>Hash, H: ~<span class="kw">const </span>Hasher&gt;(data: <span class="kw-2">&amp;</span>[T], state: <span class="kw-2">&amp;mut </span>H) {
+            <span class="kw">let </span><span class="kw-2">mut </span>i = <span class="number">0</span>;
+            <span class="kw">while </span>i &lt; data.len() {
+                data[i].hash(state);
+                i += <span class="number">1</span>;
+            }
+        }
+        <span class="comment">// SAFETY: same behavior, CT just uses while instead of for
+        </span><span class="kw">unsafe </span>{ const_eval_select((data, state), ct, rt) };
     }
 }
 
@@ -1291,6 +1334,7 @@
 /// [`write_u8`]: Hasher::write_u8
 /// [`write_u32`]: Hasher::write_u32
 </span><span class="attr">#[stable(feature = <span class="string">&quot;rust1&quot;</span>, since = <span class="string">&quot;1.0.0&quot;</span>)]
+#[const_trait]
 </span><span class="kw">pub trait </span>Hasher {
     <span class="doccomment">/// Returns the hash value for the values written so far.
     ///
@@ -1536,7 +1580,8 @@
 }
 
 <span class="attr">#[stable(feature = <span class="string">&quot;indirect_hasher_impl&quot;</span>, since = <span class="string">&quot;1.22.0&quot;</span>)]
-</span><span class="kw">impl</span>&lt;H: Hasher + <span class="question-mark">?</span>Sized&gt; Hasher <span class="kw">for </span><span class="kw-2">&amp;mut </span>H {
+#[rustc_const_unstable(feature = <span class="string">&quot;const_hash&quot;</span>, issue = <span class="string">&quot;104061&quot;</span>)]
+</span><span class="kw">impl</span>&lt;H: ~<span class="kw">const </span>Hasher + <span class="question-mark">?</span>Sized&gt; <span class="kw">const </span>Hasher <span class="kw">for </span><span class="kw-2">&amp;mut </span>H {
     <span class="kw">fn </span>finish(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; u64 {
         (<span class="kw-2">**</span><span class="self">self</span>).finish()
     }
@@ -1616,6 +1661,7 @@
 /// [`build_hasher`]: BuildHasher::build_hasher
 /// [`HashMap`]: ../../std/collections/struct.HashMap.html
 </span><span class="attr">#[stable(since = <span class="string">&quot;1.7.0&quot;</span>, feature = <span class="string">&quot;build_hasher&quot;</span>)]
+#[const_trait]
 </span><span class="kw">pub trait </span>BuildHasher {
     <span class="doccomment">/// Type of the hasher that will be created.
     </span><span class="attr">#[stable(since = <span class="string">&quot;1.7.0&quot;</span>, feature = <span class="string">&quot;build_hasher&quot;</span>)]
@@ -1676,9 +1722,10 @@
     /// );
     /// ```
     </span><span class="attr">#[unstable(feature = <span class="string">&quot;build_hasher_simple_hash_one&quot;</span>, issue = <span class="string">&quot;86161&quot;</span>)]
-    </span><span class="kw">fn </span>hash_one&lt;T: Hash&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, x: T) -&gt; u64
+    </span><span class="kw">fn </span>hash_one&lt;T: ~<span class="kw">const </span>Hash + ~<span class="kw">const </span>Destruct&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, x: T) -&gt; u64
     <span class="kw">where
         </span><span class="self">Self</span>: Sized,
+        <span class="self">Self</span>::Hasher: ~<span class="kw">const </span>Hasher + ~<span class="kw">const </span>Destruct,
     {
         <span class="kw">let </span><span class="kw-2">mut </span>hasher = <span class="self">self</span>.build_hasher();
         x.hash(<span class="kw-2">&amp;mut </span>hasher);
@@ -1742,7 +1789,8 @@
 }
 
 <span class="attr">#[stable(since = <span class="string">&quot;1.7.0&quot;</span>, feature = <span class="string">&quot;build_hasher&quot;</span>)]
-</span><span class="kw">impl</span>&lt;H: Default + Hasher&gt; BuildHasher <span class="kw">for </span>BuildHasherDefault&lt;H&gt; {
+#[rustc_const_unstable(feature = <span class="string">&quot;const_hash&quot;</span>, issue = <span class="string">&quot;104061&quot;</span>)]
+</span><span class="kw">impl</span>&lt;H: ~<span class="kw">const </span>Default + Hasher&gt; <span class="kw">const </span>BuildHasher <span class="kw">for </span>BuildHasherDefault&lt;H&gt; {
     <span class="kw">type </span>Hasher = H;
 
     <span class="kw">fn </span>build_hasher(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; H {
@@ -1784,14 +1832,15 @@
     <span class="macro">macro_rules! </span>impl_write {
         ($((<span class="macro-nonterminal">$ty</span>:ident, <span class="macro-nonterminal">$meth</span>:ident),)<span class="kw-2">*</span>) =&gt; {$(
             <span class="attr">#[stable(feature = <span class="string">&quot;rust1&quot;</span>, since = <span class="string">&quot;1.0.0&quot;</span>)]
-            </span><span class="kw">impl </span>Hash <span class="kw">for </span><span class="macro-nonterminal">$ty </span>{
+            #[rustc_const_unstable(feature = <span class="string">&quot;const_hash&quot;</span>, issue = <span class="string">&quot;104061&quot;</span>)]
+            </span><span class="kw">impl const </span>Hash <span class="kw">for </span><span class="macro-nonterminal">$ty </span>{
                 <span class="attr">#[inline]
-                </span><span class="kw">fn </span>hash&lt;H: Hasher&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, state: <span class="kw-2">&amp;mut </span>H) {
+                </span><span class="kw">fn </span>hash&lt;H: ~<span class="kw">const </span>Hasher&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, state: <span class="kw-2">&amp;mut </span>H) {
                     state.<span class="macro-nonterminal">$meth</span>(<span class="kw-2">*</span><span class="self">self</span>)
                 }
 
                 <span class="attr">#[inline]
-                </span><span class="kw">fn </span>hash_slice&lt;H: Hasher&gt;(data: <span class="kw-2">&amp;</span>[<span class="macro-nonterminal">$ty</span>], state: <span class="kw-2">&amp;mut </span>H) {
+                </span><span class="kw">fn </span>hash_slice&lt;H: ~<span class="kw">const </span>Hasher&gt;(data: <span class="kw-2">&amp;</span>[<span class="macro-nonterminal">$ty</span>], state: <span class="kw-2">&amp;mut </span>H) {
                     <span class="kw">let </span>newlen = data.len() * mem::size_of::&lt;<span class="macro-nonterminal">$ty</span>&gt;();
                     <span class="kw">let </span>ptr = data.as_ptr() <span class="kw">as </span><span class="kw-2">*const </span>u8;
                     <span class="comment">// SAFETY: `ptr` is valid and aligned, as this macro is only used
@@ -1820,33 +1869,37 @@
     }
 
     <span class="attr">#[stable(feature = <span class="string">&quot;rust1&quot;</span>, since = <span class="string">&quot;1.0.0&quot;</span>)]
-    </span><span class="kw">impl </span>Hash <span class="kw">for </span>bool {
+    #[rustc_const_unstable(feature = <span class="string">&quot;const_hash&quot;</span>, issue = <span class="string">&quot;104061&quot;</span>)]
+    </span><span class="kw">impl const </span>Hash <span class="kw">for </span>bool {
         <span class="attr">#[inline]
-        </span><span class="kw">fn </span>hash&lt;H: Hasher&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, state: <span class="kw-2">&amp;mut </span>H) {
+        </span><span class="kw">fn </span>hash&lt;H: ~<span class="kw">const </span>Hasher&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, state: <span class="kw-2">&amp;mut </span>H) {
             state.write_u8(<span class="kw-2">*</span><span class="self">self </span><span class="kw">as </span>u8)
         }
     }
 
     <span class="attr">#[stable(feature = <span class="string">&quot;rust1&quot;</span>, since = <span class="string">&quot;1.0.0&quot;</span>)]
-    </span><span class="kw">impl </span>Hash <span class="kw">for </span>char {
+    #[rustc_const_unstable(feature = <span class="string">&quot;const_hash&quot;</span>, issue = <span class="string">&quot;104061&quot;</span>)]
+    </span><span class="kw">impl const </span>Hash <span class="kw">for </span>char {
         <span class="attr">#[inline]
-        </span><span class="kw">fn </span>hash&lt;H: Hasher&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, state: <span class="kw-2">&amp;mut </span>H) {
+        </span><span class="kw">fn </span>hash&lt;H: ~<span class="kw">const </span>Hasher&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, state: <span class="kw-2">&amp;mut </span>H) {
             state.write_u32(<span class="kw-2">*</span><span class="self">self </span><span class="kw">as </span>u32)
         }
     }
 
     <span class="attr">#[stable(feature = <span class="string">&quot;rust1&quot;</span>, since = <span class="string">&quot;1.0.0&quot;</span>)]
-    </span><span class="kw">impl </span>Hash <span class="kw">for </span>str {
+    #[rustc_const_unstable(feature = <span class="string">&quot;const_hash&quot;</span>, issue = <span class="string">&quot;104061&quot;</span>)]
+    </span><span class="kw">impl const </span>Hash <span class="kw">for </span>str {
         <span class="attr">#[inline]
-        </span><span class="kw">fn </span>hash&lt;H: Hasher&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, state: <span class="kw-2">&amp;mut </span>H) {
+        </span><span class="kw">fn </span>hash&lt;H: ~<span class="kw">const </span>Hasher&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, state: <span class="kw-2">&amp;mut </span>H) {
             state.write_str(<span class="self">self</span>);
         }
     }
 
     <span class="attr">#[stable(feature = <span class="string">&quot;never_hash&quot;</span>, since = <span class="string">&quot;1.29.0&quot;</span>)]
-    </span><span class="kw">impl </span>Hash <span class="kw">for </span>! {
+    #[rustc_const_unstable(feature = <span class="string">&quot;const_hash&quot;</span>, issue = <span class="string">&quot;104061&quot;</span>)]
+    </span><span class="kw">impl const </span>Hash <span class="kw">for </span>! {
         <span class="attr">#[inline]
-        </span><span class="kw">fn </span>hash&lt;H: Hasher&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="kw">_</span>: <span class="kw-2">&amp;mut </span>H) {
+        </span><span class="kw">fn </span>hash&lt;H: ~<span class="kw">const </span>Hasher&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="kw">_</span>: <span class="kw-2">&amp;mut </span>H) {
             <span class="kw-2">*</span><span class="self">self
         </span>}
     }
@@ -1854,9 +1907,10 @@
     <span class="macro">macro_rules! </span>impl_hash_tuple {
         () =&gt; (
             <span class="attr">#[stable(feature = <span class="string">&quot;rust1&quot;</span>, since = <span class="string">&quot;1.0.0&quot;</span>)]
-            </span><span class="kw">impl </span>Hash <span class="kw">for </span>() {
+            #[rustc_const_unstable(feature = <span class="string">&quot;const_hash&quot;</span>, issue = <span class="string">&quot;104061&quot;</span>)]
+            </span><span class="kw">impl const </span>Hash <span class="kw">for </span>() {
                 <span class="attr">#[inline]
-                </span><span class="kw">fn </span>hash&lt;H: Hasher&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, _state: <span class="kw-2">&amp;mut </span>H) {}
+                </span><span class="kw">fn </span>hash&lt;H: ~<span class="kw">const </span>Hasher&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, _state: <span class="kw-2">&amp;mut </span>H) {}
             }
         );
 
@@ -1864,10 +1918,11 @@
             <span class="macro">maybe_tuple_doc! </span>{
                 $(<span class="macro-nonterminal">$name</span>)+ @
                 <span class="attr">#[stable(feature = <span class="string">&quot;rust1&quot;</span>, since = <span class="string">&quot;1.0.0&quot;</span>)]
-                </span><span class="kw">impl</span>&lt;$(<span class="macro-nonterminal">$name</span>: Hash),+&gt; Hash <span class="kw">for </span>($(<span class="macro-nonterminal">$name</span>,)+) <span class="kw">where </span><span class="macro">last_type!</span>($(<span class="macro-nonterminal">$name</span>,)+): <span class="question-mark">?</span>Sized {
+                #[rustc_const_unstable(feature = <span class="string">&quot;const_hash&quot;</span>, issue = <span class="string">&quot;104061&quot;</span>)]
+                </span><span class="kw">impl</span>&lt;$(<span class="macro-nonterminal">$name</span>: ~<span class="kw">const </span>Hash),+&gt; <span class="kw">const </span>Hash <span class="kw">for </span>($(<span class="macro-nonterminal">$name</span>,)+) <span class="kw">where </span><span class="macro">last_type!</span>($(<span class="macro-nonterminal">$name</span>,)+): <span class="question-mark">?</span>Sized {
                     <span class="attr">#[allow(non_snake_case)]
                     #[inline]
-                    </span><span class="kw">fn </span>hash&lt;S: Hasher&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, state: <span class="kw-2">&amp;mut </span>S) {
+                    </span><span class="kw">fn </span>hash&lt;S: ~<span class="kw">const </span>Hasher&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, state: <span class="kw-2">&amp;mut </span>S) {
                         <span class="kw">let </span>($(<span class="kw-2">ref </span><span class="macro-nonterminal">$name</span>,)+) = <span class="kw-2">*</span><span class="self">self</span>;
                         $(<span class="macro-nonterminal">$name</span>.hash(state);)+
                     }
@@ -1910,24 +1965,27 @@
     <span class="macro">impl_hash_tuple! </span>{ T B C D E F G H I J K L }
 
     <span class="attr">#[stable(feature = <span class="string">&quot;rust1&quot;</span>, since = <span class="string">&quot;1.0.0&quot;</span>)]
-    </span><span class="kw">impl</span>&lt;T: Hash&gt; Hash <span class="kw">for </span>[T] {
+    #[rustc_const_unstable(feature = <span class="string">&quot;const_hash&quot;</span>, issue = <span class="string">&quot;104061&quot;</span>)]
+    </span><span class="kw">impl</span>&lt;T: ~<span class="kw">const </span>Hash&gt; <span class="kw">const </span>Hash <span class="kw">for </span>[T] {
         <span class="attr">#[inline]
-        </span><span class="kw">fn </span>hash&lt;H: Hasher&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, state: <span class="kw-2">&amp;mut </span>H) {
+        </span><span class="kw">fn </span>hash&lt;H: ~<span class="kw">const </span>Hasher&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, state: <span class="kw-2">&amp;mut </span>H) {
             state.write_length_prefix(<span class="self">self</span>.len());
             Hash::hash_slice(<span class="self">self</span>, state)
         }
     }
 
     <span class="attr">#[stable(feature = <span class="string">&quot;rust1&quot;</span>, since = <span class="string">&quot;1.0.0&quot;</span>)]
-    </span><span class="kw">impl</span>&lt;T: <span class="question-mark">?</span>Sized + Hash&gt; Hash <span class="kw">for </span><span class="kw-2">&amp;</span>T {
+    #[rustc_const_unstable(feature = <span class="string">&quot;const_hash&quot;</span>, issue = <span class="string">&quot;104061&quot;</span>)]
+    </span><span class="kw">impl</span>&lt;T: <span class="question-mark">?</span>Sized + ~<span class="kw">const </span>Hash&gt; <span class="kw">const </span>Hash <span class="kw">for </span><span class="kw-2">&amp;</span>T {
         <span class="attr">#[inline]
-        </span><span class="kw">fn </span>hash&lt;H: Hasher&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, state: <span class="kw-2">&amp;mut </span>H) {
+        </span><span class="kw">fn </span>hash&lt;H: ~<span class="kw">const </span>Hasher&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, state: <span class="kw-2">&amp;mut </span>H) {
             (<span class="kw-2">**</span><span class="self">self</span>).hash(state);
         }
     }
 
     <span class="attr">#[stable(feature = <span class="string">&quot;rust1&quot;</span>, since = <span class="string">&quot;1.0.0&quot;</span>)]
-    </span><span class="kw">impl</span>&lt;T: <span class="question-mark">?</span>Sized + Hash&gt; Hash <span class="kw">for </span><span class="kw-2">&amp;mut </span>T {
+    #[rustc_const_unstable(feature = <span class="string">&quot;const_hash&quot;</span>, issue = <span class="string">&quot;104061&quot;</span>)]
+    </span><span class="kw">impl</span>&lt;T: <span class="question-mark">?</span>Sized + ~<span class="kw">const </span>Hash&gt; <span class="kw">const </span>Hash <span class="kw">for </span><span class="kw-2">&amp;mut </span>T {
         <span class="attr">#[inline]
         </span><span class="kw">fn </span>hash&lt;H: Hasher&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, state: <span class="kw-2">&amp;mut </span>H) {
             (<span class="kw-2">**</span><span class="self">self</span>).hash(state);

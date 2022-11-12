@@ -330,7 +330,7 @@ failures:
 
 test result: FAILED. 1 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
 
-error: test failed, to rerun pass '--lib'
+error: test failed, to rerun pass `--lib`
 </code></pre>
 <p><span class="caption">Listing 11-4: Test results when one test passes and one
 test fails</span></p>
@@ -583,7 +583,7 @@ failures:
 
 test result: FAILED. 1 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
 
-error: test failed, to rerun pass '--lib'
+error: test failed, to rerun pass `--lib`
 </code></pre>
 <p>Our tests caught the bug! Because <code>larger.width</code> is 8 and <code>smaller.width</code> is
 5, the comparison of the widths in <code>can_hold</code> now returns <code>false</code>: 8 is not
@@ -677,7 +677,7 @@ failures:
 
 test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
 
-error: test failed, to rerun pass '--lib'
+error: test failed, to rerun pass `--lib`
 </code></pre>
 <p>Our test caught the bug! The <code>it_adds_two</code> test failed, and the message tells
 us that the assertion that fails was <code>assertion failed: `(left == right)`</code>
@@ -784,7 +784,7 @@ failures:
 
 test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
 
-error: test failed, to rerun pass '--lib'
+error: test failed, to rerun pass `--lib`
 </code></pre>
 <p>This result just indicates that the assertion failed and which line the
 assertion is on. A more useful failure message would print the value from the
@@ -831,7 +831,7 @@ failures:
 
 test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
 
-error: test failed, to rerun pass '--lib'
+error: test failed, to rerun pass `--lib`
 </code></pre>
 <p>We can see the value we actually got in the test output, which would help us
 debug what happened instead of what we were expecting to happen.</p>
@@ -942,7 +942,7 @@ failures:
 
 test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
 
-error: test failed, to rerun pass '--lib'
+error: test failed, to rerun pass `--lib`
 </code></pre>
 <p>We don’t get a very helpful message in this case, but when we look at the test
 function, we see that it’s annotated with <code>#[should_panic]</code>. The failure we got
@@ -1059,7 +1059,7 @@ failures:
 
 test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
 
-error: test failed, to rerun pass '--lib'
+error: test failed, to rerun pass `--lib`
 </code></pre>
 <p>The failure message indicates that this test did indeed panic as we expected,
 but the panic message did not include the expected string <code>'Guess value must be less than or equal to 100'</code>. The panic message that we did get in this case was
