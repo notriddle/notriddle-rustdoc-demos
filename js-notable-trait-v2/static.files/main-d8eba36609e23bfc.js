@@ -873,7 +873,7 @@ function loadCss(cssUrl) {
         } else {
             wrapper.style.setProperty(
                 "--popover-arrow-offset",
-                (wrapperPos.right - pos.right + 24) + "px"
+                (wrapperPos.right - pos.right + 4) + "px"
             );
         }
         wrapper.style.visibility = "";
