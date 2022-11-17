@@ -1,0 +1,3 @@
+(function() {var implementors = {
+"test_dingus_enum":[["impl <a class=\"trait\" href=\"https://doc.rust-lang.org/nightly/core/marker/trait.Send.html\" title=\"trait core::marker::Send\">Send</a> for <a class=\"enum\" href=\"test_dingus_enum/enum.TestEnum.html\" title=\"enum test_dingus_enum::TestEnum\">TestEnum</a>",1,["test_dingus_enum::TestEnum"]]]
+};if (window.register_implementors) {window.register_implementors(implementors);} else {window.pending_implementors = implementors;}})()
