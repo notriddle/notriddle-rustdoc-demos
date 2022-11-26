@@ -1,0 +1,254 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Examples"><meta name="keywords" content="rust, rustlang, rust-lang, test"><title>test in test_dingus - Rust</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/SourceSerif4-Regular-1f7d512b176f0f72.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/SourceSerif4-Bold-124a1ca42af929b6.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../static.files/rustdoc-c919ebfe70bfec8b.css" id="mainThemeStyle"><link rel="stylesheet" id="themeStyle" href="../static.files/light-3bcdcab5f4113412.css"><link rel="stylesheet" disabled href="../static.files/dark-091ecdca18d5df85.css"><link rel="stylesheet" disabled href="../static.files/ayu-45445754dcd01ab2.css"><script id="default-settings" ></script><script src="../static.files/storage-d43fa987303ecbbb.js"></script><script defer src="sidebar-items.js"></script><script defer src="../static.files/main-458bffc4c06ccf37.js"></script><script defer src="../static.files/scrape-examples-1f45318ad6bd2a81.js"></script><noscript><link rel="stylesheet" href="../static.files/noscript-13285aec31fa243e.css"></noscript><link rel="alternate icon" type="image/png" href="../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc fn"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../test_dingus/index.html"><div class="logo-container"><img class="rust-logo" src="../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></div></a><h2></h2></nav><nav class="sidebar"><a class="sidebar-logo" href="../test_dingus/index.html"><div class="logo-container"><img class="rust-logo" src="../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></div></a><div class="sidebar-elems"><h2><a href="index.html">In test_dingus</a></h2></div></nav><main><div class="width-limiter"><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../static.files/wheel-5ec35bf9ca753509.svg"></a></div></form></nav><section id="main-content" class="content"><div class="main-heading"><h1 class="fqn">Function <a href="index.html">test_dingus</a>::<wbr><a class="fn" href="#">test</a><button id="copy-path" onclick="copy_path(this)" title="Copy item path to clipboard"><img src="../static.files/clipboard-7571035ce49a181d.svg" width="19" height="18" alt="Copy item path"></button></h1><span class="out-of-band"><a class="srclink" href="../src/test_dingus/lib.rs.html#7">source</a> · <button id="toggle-all-docs" title="collapse all docs">[<span>&#x2212;</span>]</button></span></div><div class="item-decl"><pre class="rust fn"><code>pub fn test()</code></pre></div><details class="rustdoc-toggle top-doc" open><summary class="hideme"><span>Expand description</span></summary><div class="docblock"><h2 id="examples"><a href="#examples">Examples</a></h2>
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code>test();
+test();</code></pre></div>
+</div></details><div class="docblock scraped-example-list"><span></span><h5 id="scraped-examples"><a href="#scraped-examples">Examples found in repository</a><a class="scrape-help" href="../scrape-examples-help.html">?</a></h5><div class="scraped-example " data-locs="[[[12,12],&quot;../src/check3/check3.rs.html#13&quot;,&quot;line 13&quot;]]"><div class="scraped-example-title">examples/check3.rs (<a href="../src/check3/check3.rs.html#13">line 13</a>)</div><div class="code-wrapper"><div class="example-wrap"><pre class="src-line-numbers"><span>1</span>
+<span>2</span>
+<span>3</span>
+<span>4</span>
+<span>5</span>
+<span>6</span>
+<span>7</span>
+<span>8</span>
+<span>9</span>
+<span>10</span>
+<span>11</span>
+<span>12</span>
+<span>13</span>
+<span>14</span>
+<span>15</span>
+<span>16</span>
+<span>17</span>
+<span>18</span>
+<span>19</span>
+<span>20</span>
+<span>21</span>
+<span>22</span>
+<span>23</span>
+<span>24</span>
+<span>25</span>
+</pre><pre class="rust"><code><button class="expand">&varr;</button><span class="kw">fn </span>main() {
+    <span class="kw">for </span>i <span class="kw">in </span><span class="number">0</span>..<span class="number">9 </span>{
+        <span class="macro">println!</span>(<span class="string">&quot;hello world!&quot;</span>);
+        <span class="macro">println!</span>(<span class="string">&quot;hello world!&quot;</span>);
+        <span class="macro">println!</span>(<span class="string">&quot;hello world!&quot;</span>);
+        <span class="macro">println!</span>(<span class="string">&quot;hello world!&quot;</span>);
+        <span class="macro">println!</span>(<span class="string">&quot;hello world!&quot;</span>);
+        <span class="macro">println!</span>(<span class="string">&quot;hello world!&quot;</span>);
+        <span class="macro">println!</span>(<span class="string">&quot;hello world!&quot;</span>);
+        <span class="macro">println!</span>(<span class="string">&quot;hello world!&quot;</span>);
+        <span class="macro">println!</span>(<span class="string">&quot;hello world!&quot;</span>);
+    }
+    <span class="highlight focus">test_dingus::test</span>();
+    <span class="kw">for </span>i <span class="kw">in </span><span class="number">0</span>..<span class="number">9 </span>{
+        <span class="macro">println!</span>(<span class="string">&quot;hello world!&quot;</span>);
+        <span class="macro">println!</span>(<span class="string">&quot;hello world!&quot;</span>);
+        <span class="macro">println!</span>(<span class="string">&quot;hello world!&quot;</span>);
+        <span class="macro">println!</span>(<span class="string">&quot;hello world!&quot;</span>);
+        <span class="macro">println!</span>(<span class="string">&quot;hello world!&quot;</span>);
+        <span class="macro">println!</span>(<span class="string">&quot;hello world!&quot;</span>);
+        <span class="macro">println!</span>(<span class="string">&quot;hello world!&quot;</span>);
+        <span class="macro">println!</span>(<span class="string">&quot;hello world!&quot;</span>);
+        <span class="macro">println!</span>(<span class="string">&quot;hello world!&quot;</span>);
+    }
+}</code></pre></div>
+</div></div><details class="rustdoc-toggle more-examples-toggle"><summary class="hideme"><span>More examples</span></summary><div class="hide-more">Hide additional examples</div><div class="more-scraped-examples"><div class="toggle-line"><div class="toggle-line-inner"></div></div><div class="more-scraped-examples-inner"><div class="scraped-example " data-locs="[[[12,12],&quot;../src/check4/check4.rs.html#13&quot;,&quot;line 13&quot;]]"><div class="scraped-example-title">examples/check4.rs (<a href="../src/check4/check4.rs.html#13">line 13</a>)</div><div class="code-wrapper"><div class="example-wrap"><pre class="src-line-numbers"><span>1</span>
+<span>2</span>
+<span>3</span>
+<span>4</span>
+<span>5</span>
+<span>6</span>
+<span>7</span>
+<span>8</span>
+<span>9</span>
+<span>10</span>
+<span>11</span>
+<span>12</span>
+<span>13</span>
+<span>14</span>
+<span>15</span>
+<span>16</span>
+<span>17</span>
+<span>18</span>
+<span>19</span>
+<span>20</span>
+<span>21</span>
+<span>22</span>
+<span>23</span>
+<span>24</span>
+<span>25</span>
+</pre><pre class="rust"><code><button class="expand">&varr;</button><span class="kw">fn </span>main() {
+    <span class="kw">for </span>i <span class="kw">in </span><span class="number">0</span>..<span class="number">9 </span>{
+        <span class="macro">println!</span>(<span class="string">&quot;hello world!&quot;</span>);
+        <span class="macro">println!</span>(<span class="string">&quot;hello world!&quot;</span>);
+        <span class="macro">println!</span>(<span class="string">&quot;hello world!&quot;</span>);
+        <span class="macro">println!</span>(<span class="string">&quot;hello world!&quot;</span>);
+        <span class="macro">println!</span>(<span class="string">&quot;hello world!&quot;</span>);
+        <span class="macro">println!</span>(<span class="string">&quot;hello world!&quot;</span>);
+        <span class="macro">println!</span>(<span class="string">&quot;hello world!&quot;</span>);
+        <span class="macro">println!</span>(<span class="string">&quot;hello world!&quot;</span>);
+        <span class="macro">println!</span>(<span class="string">&quot;hello world!&quot;</span>);
+    }
+    <span class="highlight focus">test_dingus::test</span>();
+    <span class="kw">for </span>i <span class="kw">in </span><span class="number">0</span>..<span class="number">9 </span>{
+        <span class="macro">println!</span>(<span class="string">&quot;hello world!&quot;</span>);
+        <span class="macro">println!</span>(<span class="string">&quot;hello world!&quot;</span>);
+        <span class="macro">println!</span>(<span class="string">&quot;hello world!&quot;</span>);
+        <span class="macro">println!</span>(<span class="string">&quot;hello world!&quot;</span>);
+        <span class="macro">println!</span>(<span class="string">&quot;hello world!&quot;</span>);
+        <span class="macro">println!</span>(<span class="string">&quot;hello world!&quot;</span>);
+        <span class="macro">println!</span>(<span class="string">&quot;hello world!&quot;</span>);
+        <span class="macro">println!</span>(<span class="string">&quot;hello world!&quot;</span>);
+        <span class="macro">println!</span>(<span class="string">&quot;hello world!&quot;</span>);
+    }
+}</code></pre></div>
+</div></div><div class="scraped-example " data-locs="[[[12,12],&quot;../src/check5/check5.rs.html#13&quot;,&quot;line 13&quot;]]"><div class="scraped-example-title">examples/check5.rs (<a href="../src/check5/check5.rs.html#13">line 13</a>)</div><div class="code-wrapper"><div class="example-wrap"><pre class="src-line-numbers"><span>1</span>
+<span>2</span>
+<span>3</span>
+<span>4</span>
+<span>5</span>
+<span>6</span>
+<span>7</span>
+<span>8</span>
+<span>9</span>
+<span>10</span>
+<span>11</span>
+<span>12</span>
+<span>13</span>
+<span>14</span>
+<span>15</span>
+<span>16</span>
+<span>17</span>
+<span>18</span>
+<span>19</span>
+<span>20</span>
+<span>21</span>
+<span>22</span>
+<span>23</span>
+<span>24</span>
+<span>25</span>
+</pre><pre class="rust"><code><button class="expand">&varr;</button><span class="kw">fn </span>main() {
+    <span class="kw">for </span>i <span class="kw">in </span><span class="number">0</span>..<span class="number">9 </span>{
+        <span class="macro">println!</span>(<span class="string">&quot;hello world!&quot;</span>);
+        <span class="macro">println!</span>(<span class="string">&quot;hello world!&quot;</span>);
+        <span class="macro">println!</span>(<span class="string">&quot;hello world!&quot;</span>);
+        <span class="macro">println!</span>(<span class="string">&quot;hello world!&quot;</span>);
+        <span class="macro">println!</span>(<span class="string">&quot;hello world!&quot;</span>);
+        <span class="macro">println!</span>(<span class="string">&quot;hello world!&quot;</span>);
+        <span class="macro">println!</span>(<span class="string">&quot;hello world!&quot;</span>);
+        <span class="macro">println!</span>(<span class="string">&quot;hello world!&quot;</span>);
+        <span class="macro">println!</span>(<span class="string">&quot;hello world!&quot;</span>);
+    }
+    <span class="highlight focus">test_dingus::test</span>();
+    <span class="kw">for </span>i <span class="kw">in </span><span class="number">0</span>..<span class="number">9 </span>{
+        <span class="macro">println!</span>(<span class="string">&quot;hello world!&quot;</span>);
+        <span class="macro">println!</span>(<span class="string">&quot;hello world!&quot;</span>);
+        <span class="macro">println!</span>(<span class="string">&quot;hello world!&quot;</span>);
+        <span class="macro">println!</span>(<span class="string">&quot;hello world!&quot;</span>);
+        <span class="macro">println!</span>(<span class="string">&quot;hello world!&quot;</span>);
+        <span class="macro">println!</span>(<span class="string">&quot;hello world!&quot;</span>);
+        <span class="macro">println!</span>(<span class="string">&quot;hello world!&quot;</span>);
+        <span class="macro">println!</span>(<span class="string">&quot;hello world!&quot;</span>);
+        <span class="macro">println!</span>(<span class="string">&quot;hello world!&quot;</span>);
+    }
+}</code></pre></div>
+</div></div><div class="scraped-example " data-locs="[[[12,12],&quot;../src/check/check.rs.html#13&quot;,&quot;line 13&quot;]]"><div class="scraped-example-title">examples/check.rs (<a href="../src/check/check.rs.html#13">line 13</a>)</div><div class="code-wrapper"><div class="example-wrap"><pre class="src-line-numbers"><span>1</span>
+<span>2</span>
+<span>3</span>
+<span>4</span>
+<span>5</span>
+<span>6</span>
+<span>7</span>
+<span>8</span>
+<span>9</span>
+<span>10</span>
+<span>11</span>
+<span>12</span>
+<span>13</span>
+<span>14</span>
+<span>15</span>
+<span>16</span>
+<span>17</span>
+<span>18</span>
+<span>19</span>
+<span>20</span>
+<span>21</span>
+<span>22</span>
+<span>23</span>
+<span>24</span>
+<span>25</span>
+</pre><pre class="rust"><code><button class="expand">&varr;</button><span class="kw">fn </span>main() {
+    <span class="kw">for </span>i <span class="kw">in </span><span class="number">0</span>..<span class="number">9 </span>{
+        <span class="macro">println!</span>(<span class="string">&quot;hello world!&quot;</span>);
+        <span class="macro">println!</span>(<span class="string">&quot;hello world!&quot;</span>);
+        <span class="macro">println!</span>(<span class="string">&quot;hello world!&quot;</span>);
+        <span class="macro">println!</span>(<span class="string">&quot;hello world!&quot;</span>);
+        <span class="macro">println!</span>(<span class="string">&quot;hello world!&quot;</span>);
+        <span class="macro">println!</span>(<span class="string">&quot;hello world!&quot;</span>);
+        <span class="macro">println!</span>(<span class="string">&quot;hello world!&quot;</span>);
+        <span class="macro">println!</span>(<span class="string">&quot;hello world!&quot;</span>);
+        <span class="macro">println!</span>(<span class="string">&quot;hello world!&quot;</span>);
+    }
+    <span class="highlight focus">test_dingus::test</span>();
+    <span class="kw">for </span>i <span class="kw">in </span><span class="number">0</span>..<span class="number">9 </span>{
+        <span class="macro">println!</span>(<span class="string">&quot;hello world!&quot;</span>);
+        <span class="macro">println!</span>(<span class="string">&quot;hello world!&quot;</span>);
+        <span class="macro">println!</span>(<span class="string">&quot;hello world!&quot;</span>);
+        <span class="macro">println!</span>(<span class="string">&quot;hello world!&quot;</span>);
+        <span class="macro">println!</span>(<span class="string">&quot;hello world!&quot;</span>);
+        <span class="macro">println!</span>(<span class="string">&quot;hello world!&quot;</span>);
+        <span class="macro">println!</span>(<span class="string">&quot;hello world!&quot;</span>);
+        <span class="macro">println!</span>(<span class="string">&quot;hello world!&quot;</span>);
+        <span class="macro">println!</span>(<span class="string">&quot;hello world!&quot;</span>);
+    }
+}</code></pre></div>
+</div></div><div class="scraped-example " data-locs="[[[12,12],&quot;../src/check2/check2.rs.html#13&quot;,&quot;line 13&quot;]]"><div class="scraped-example-title">examples/check2.rs (<a href="../src/check2/check2.rs.html#13">line 13</a>)</div><div class="code-wrapper"><div class="example-wrap"><pre class="src-line-numbers"><span>1</span>
+<span>2</span>
+<span>3</span>
+<span>4</span>
+<span>5</span>
+<span>6</span>
+<span>7</span>
+<span>8</span>
+<span>9</span>
+<span>10</span>
+<span>11</span>
+<span>12</span>
+<span>13</span>
+<span>14</span>
+<span>15</span>
+<span>16</span>
+<span>17</span>
+<span>18</span>
+<span>19</span>
+<span>20</span>
+<span>21</span>
+<span>22</span>
+<span>23</span>
+<span>24</span>
+<span>25</span>
+</pre><pre class="rust"><code><button class="expand">&varr;</button><span class="kw">fn </span>main() {
+    <span class="kw">for </span>i <span class="kw">in </span><span class="number">0</span>..<span class="number">9 </span>{
+        <span class="macro">println!</span>(<span class="string">&quot;hello world!&quot;</span>);
+        <span class="macro">println!</span>(<span class="string">&quot;hello world!&quot;</span>);
+        <span class="macro">println!</span>(<span class="string">&quot;hello world!&quot;</span>);
+        <span class="macro">println!</span>(<span class="string">&quot;hello world!&quot;</span>);
+        <span class="macro">println!</span>(<span class="string">&quot;hello world!&quot;</span>);
+        <span class="macro">println!</span>(<span class="string">&quot;hello world!&quot;</span>);
+        <span class="macro">println!</span>(<span class="string">&quot;hello world!&quot;</span>);
+        <span class="macro">println!</span>(<span class="string">&quot;hello world!&quot;</span>);
+        <span class="macro">println!</span>(<span class="string">&quot;hello world!&quot;</span>);
+    }
+    <span class="highlight focus">test_dingus::test</span>();
+    <span class="kw">for </span>i <span class="kw">in </span><span class="number">0</span>..<span class="number">9 </span>{
+        <span class="macro">println!</span>(<span class="string">&quot;hello world!&quot;</span>);
+        <span class="macro">println!</span>(<span class="string">&quot;hello world!&quot;</span>);
+        <span class="macro">println!</span>(<span class="string">&quot;hello world!&quot;</span>);
+        <span class="macro">println!</span>(<span class="string">&quot;hello world!&quot;</span>);
+        <span class="macro">println!</span>(<span class="string">&quot;hello world!&quot;</span>);
+        <span class="macro">println!</span>(<span class="string">&quot;hello world!&quot;</span>);
+        <span class="macro">println!</span>(<span class="string">&quot;hello world!&quot;</span>);
+        <span class="macro">println!</span>(<span class="string">&quot;hello world!&quot;</span>);
+        <span class="macro">println!</span>(<span class="string">&quot;hello world!&quot;</span>);
+    }
+}</code></pre></div>
+</div></div></div></div></details></div></section></div></main><div id="rustdoc-vars" data-root-path="../" data-static-root-path="../static.files/" data-current-crate="test_dingus" data-themes="" data-resource-suffix="" data-rustdoc-version="1.67.0-dev" data-search-js="search-df80cc3cb87b6482.js" data-settings-js="settings-7e1cf5cc683233f7.js" data-settings-css="settings-af96d9e2fc13e081.css" ></div></body></html>
