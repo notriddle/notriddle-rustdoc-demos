@@ -1,0 +1,3 @@
+(function() {var implementors = {
+"test":[["impl <a class=\"trait\" href=\"https://doc.rust-lang.org/nightly/core/panic/unwind_safe/trait.UnwindSafe.html\" title=\"trait core::panic::unwind_safe::UnwindSafe\">UnwindSafe</a> for <a class=\"struct\" href=\"test/struct.TypeWithImplDoc.html\" title=\"struct test::TypeWithImplDoc\">TypeWithImplDoc</a>",1,["test::TypeWithImplDoc"]]]
+};if (window.register_implementors) {window.register_implementors(implementors);} else {window.pending_implementors = implementors;}})()
