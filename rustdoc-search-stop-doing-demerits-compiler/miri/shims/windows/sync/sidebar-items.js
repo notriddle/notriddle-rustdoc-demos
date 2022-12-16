@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"constant":[["CONDVAR_ID_OFFSET",""],["INIT_ONCE_ID_OFFSET",""],["SRWLOCK_ID_OFFSET",""]],"trait":[["EvalContextExt",""],["EvalContextExtPriv",""]]};

@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":[["may_contain_reference","Determine whether this type may contain a reference (or box), and thus needs retagging. We will only recurse `depth` times into Tuples/ADTs to bound the cost of this."]],"struct":[["AddRetag",""]]};

@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":[["compute_flattening","Compute the replacement of flattened places into locals."],["escaping_locals","Identify all locals that are not eligible for SROA."],["replace_flattened_locals","Perform the replacement computed by `compute_flattening`."]],"struct":[["ReplacementMap",""],["ReplacementVisitor",""],["ScalarReplacementOfAggregates",""]]};

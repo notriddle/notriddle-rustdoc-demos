@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"enum":[["Category",""],["RvalueFunc","Rvalues fall into different “styles” that will determine which fn is best suited to generate them."]]};

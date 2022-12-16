@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":[["to_fluent_args","Convert diagnostic arguments (a rustc internal type that exists to implement `Encodable`/`Decodable`) into `FluentArgs` which is necessary to perform translation."]],"trait":[["Translate",""]]};

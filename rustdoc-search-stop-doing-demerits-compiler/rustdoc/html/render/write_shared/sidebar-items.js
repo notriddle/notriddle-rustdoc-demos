@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":[["write_shared","Rustdoc writes out two kinds of shared files:"]]};

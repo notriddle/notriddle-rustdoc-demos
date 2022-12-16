@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":[["lib_embargo_visit_item",""]],"macro":[["define_method",""]],"struct":[["LibEmbargoVisitor","Similar to `librustc_privacy::EmbargoVisitor`, but also takes specific rustdoc annotations into account (i.e., `doc(hidden)`)"],["RustdocEffectiveVisibilities",""]]};

@@ -1,0 +1,3 @@
+(function() {var implementors = {
+"rustc_resolve":[["impl&lt;'a, 'b&gt; <a class=\"trait\" href=\"rustc_middle/middle/privacy/trait.IntoDefIdTree.html\" title=\"trait rustc_middle::middle::privacy::IntoDefIdTree\">IntoDefIdTree</a> for &amp;'b mut <a class=\"struct\" href=\"rustc_resolve/struct.Resolver.html\" title=\"struct rustc_resolve::Resolver\">Resolver</a>&lt;'a&gt;"]]
+};if (window.register_implementors) {window.register_implementors(implementors);} else {window.pending_implementors = implementors;}})()

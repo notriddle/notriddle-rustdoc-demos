@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"enum":[["Level","Represents the levels of effective visibility an item can have."]],"struct":[["EffectiveVisibilities","Holds a map of effective visibilities for reachable HIR nodes."],["EffectiveVisibility",""]],"trait":[["IntoDefIdTree",""]]};

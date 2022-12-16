@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":[["features","`cfg_attr`-process the crate’s attributes and compute the crate’s features."],["get_features",""],["is_cfg",""],["parse_cfg",""]],"struct":[["StripUnconfigured","A folder that strips out items that do not belong in the current configuration."]]};

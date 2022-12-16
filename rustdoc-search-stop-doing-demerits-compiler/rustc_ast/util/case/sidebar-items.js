@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"enum":[["Case","Whatever to ignore case (`fn` vs `Fn` vs `FN`) or not. Used for recovering."]]};

@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"static":[["DEREF_INTO_DYN_SUPERTRAIT","The `deref_into_dyn_supertrait` lint is output whenever there is a use of the `Deref` implementation with a `dyn SuperTrait` type as `Output`."]],"struct":[["DerefIntoDynSupertrait",""]]};

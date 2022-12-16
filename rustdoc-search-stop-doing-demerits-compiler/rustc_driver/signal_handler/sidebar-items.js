@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":[["backtrace_symbols_fd",""],["install","When an error signal (such as SIGABRT or SIGSEGV) is delivered to the process, print a stack trace and then exit."],["print_stack_trace",""]]};

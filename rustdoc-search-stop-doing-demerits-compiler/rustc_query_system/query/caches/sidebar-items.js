@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"struct":[["ArenaCache",""],["DefaultCache",""],["DefaultCacheSelector",""],["VecArenaCache",""],["VecCache",""],["VecCacheSelector",""]],"trait":[["CacheSelector",""],["QueryCache",""],["QueryStorage",""]]};

@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"struct":[["ProvenanceCopy","A partial, owned list of provenance to transfer into another allocation."],["ProvenanceMap","Stores the provenance information of pointers stored in memory."]]};

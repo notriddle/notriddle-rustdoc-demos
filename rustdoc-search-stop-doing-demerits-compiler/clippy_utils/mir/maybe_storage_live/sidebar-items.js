@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"struct":[["MaybeStorageLive","Determines liveness of each local purely based on `StorageLive`/`Dead`."]]};

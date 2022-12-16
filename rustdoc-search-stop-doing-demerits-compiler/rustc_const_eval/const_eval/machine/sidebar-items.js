@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"enum":[["CheckAlignment",""],["MemoryKind",""]],"struct":[["CompileTimeInterpreter","Extra machine state for CTFE, and the Machine instance"]],"type":[["CompileTimeEvalContext",""]]};

@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"enum":[["CastError",""],["PointerKind","The kind of pointer and associated metadata (thin, length or vtable) - we only allow casts between fat pointers if their metadata have the same kind."]],"fn":[["make_invalid_casting_error",""]],"struct":[["CastCheck","Reifies a cast check to be checked once we have full type information for a function context."]]};

@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":[["add_move_for_packed_drop",""],["add_moves_for_packed_drops",""],["add_moves_for_packed_drops_patch",""]],"struct":[["AddMovesForPackedDrops","This pass moves values being dropped that are within a packed struct to a separate local before dropping them, to ensure that they are dropped from an aligned address."]]};

@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":[["check_link_name_xor_ordinal",""],["check_link_ordinal",""],["codegen_fn_attrs",""],["linkage_by_name",""],["provide",""],["should_inherit_track_caller","Checks if the provided DefId is a method in a trait impl for a trait which has track_caller applied to the method prototype."]]};

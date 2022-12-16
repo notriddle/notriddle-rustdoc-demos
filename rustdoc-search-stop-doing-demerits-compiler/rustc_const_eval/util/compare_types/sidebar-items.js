@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":[["is_equal_up_to_subtyping","Returns whether the two types are equal up to subtyping."],["is_subtype","Returns whether `src` is a subtype of `dest`, i.e. `src <: dest`."]]};

@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":[["check_fn","Helper used for fns and closures. Does the grungy work of checking a function body and returns the function context used for that purpose, since in the case of a fn item there is still a bit more to do."],["check_panic_info_fn",""]]};

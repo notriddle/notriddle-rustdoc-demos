@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":[["add_drop_of_var_derefs_origin","For every potentially drop()-touched region `region` in `local`’s type (`kind`), emit a Polonius `use_of_var_derefs_origin(local, origin)` fact."],["populate_access_facts",""]],"struct":[["UseFactsExtractor",""]],"type":[["PathPointRelation",""],["VarPointRelation",""]]};

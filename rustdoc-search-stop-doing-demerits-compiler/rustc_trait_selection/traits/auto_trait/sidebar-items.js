@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"enum":[["AutoTraitResult",""],["RegionTarget",""]],"struct":[["AutoTraitFinder",""],["AutoTraitInfo",""],["RegionDeps",""],["RegionReplacer","Replaces all ReVars in a type with ty::Region’s, using the provided map"]]};

@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"struct":[["OnUnimplementedDirective",""],["OnUnimplementedFormatString",""],["OnUnimplementedNote","For the `#[rustc_on_unimplemented]` attribute"]],"trait":[["TypeErrCtxtExt",""]]};

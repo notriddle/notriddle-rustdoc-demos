@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":[["has_structural_eq_impls","This method returns true if and only if `adt_ty` itself has been marked as eligible for structural-match: namely, if it implements both `StructuralPartialEq` and `StructuralEq` (which are respectively injected by `#[derive(PartialEq)]` and `#[derive(Eq)]`)."],["provide",""]]};

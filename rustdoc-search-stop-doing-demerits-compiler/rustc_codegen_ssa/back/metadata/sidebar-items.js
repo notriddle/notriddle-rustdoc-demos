@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"enum":[["MetadataPosition",""]],"fn":[["create_compressed_metadata_file",""],["create_object_file",""],["create_wrapper_file","For rlibs we “pack” rustc metadata into a dummy object file."],["load_metadata_with",""],["search_for_section",""]],"struct":[["DefaultMetadataLoader","The default metadata loader. This is used by cg_llvm and cg_clif."]]};

@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"struct":[["ReverseMapper","Converts generic params of a TypeFoldable from one item’s generics to another. Usually from a function’s generics list to the opaque type’s own generics."]]};

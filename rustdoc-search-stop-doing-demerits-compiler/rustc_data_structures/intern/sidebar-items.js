@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"mod":[["private",""]],"struct":[["Interned","A reference to a value that is interned, and is known to be unique."]]};

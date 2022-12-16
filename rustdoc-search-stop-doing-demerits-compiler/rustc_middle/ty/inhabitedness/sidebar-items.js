@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":[["inhabited_predicate_adt","Returns an `InhabitedPredicate` that is generic over type parameters and requires calling [`InhabitedPredicate::subst`]"],["inhabited_predicate_type","N.B. this query should only be called through `Ty::inhabited_predicate`"],["provide",""]],"mod":[["inhabited_predicate",""]]};

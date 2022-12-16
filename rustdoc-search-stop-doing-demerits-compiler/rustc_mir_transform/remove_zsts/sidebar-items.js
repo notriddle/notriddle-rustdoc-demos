@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":[["maybe_zst","A cheap, approximate check to avoid unnecessary `layout_of` calls."]],"struct":[["RemoveZsts",""]]};

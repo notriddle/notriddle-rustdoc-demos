@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":[["rvalue_locals",""]],"struct":[["ContainsRegion",""],["PossibleBorrowerMap","Result of `PossibleBorrowerVisitor`."],["PossibleBorrowerVisitor","Collects the possible borrowers of each local. For example, `b = &a; c = &a;` will make `b` and (transitively) `c` possible borrowers of `a`."]]};

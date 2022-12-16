@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":[["list_contains_name",""],["mk_attr",""],["mk_attr_from_item",""],["mk_attr_name_value_str",""],["mk_attr_nested_word",""],["mk_attr_word",""],["mk_doc_comment",""]],"static":[["MAX_ATTR_ID",""]],"struct":[["AttrIdGenerator",""],["MarkedAttrs",""]]};

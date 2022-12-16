@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"enum":[["InhabitedPredicate","Represents whether some type is inhabited in a given context. Examples of uninhabited types are `!`, `enum Void {}`, or a struct containing either of those types. A type’s inhabitedness may depend on the `ParamEnv` as well as what types are visible in the current module."]],"fn":[["try_and",""],["try_or",""]]};

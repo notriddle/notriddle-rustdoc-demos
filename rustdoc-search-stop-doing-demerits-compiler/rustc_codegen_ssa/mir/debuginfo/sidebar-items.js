@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"enum":[["VariableKind",""]],"fn":[["calculate_debuginfo_offset",""]],"struct":[["DebugInfoOffset",""],["DebugScope",""],["FunctionDebugContext",""],["PerLocalVarDebugInfo","Like `mir::VarDebugInfo`, but within a `mir::Local`."]],"trait":[["DebugInfoOffsetLocation",""]]};

@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"static":[["DATA",""],["UND",""]],"type":[["DataStruct",""]]};

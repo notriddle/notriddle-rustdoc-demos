@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"macro":[["rustc_feedable_queries",""]],"mod":[["cached",""],["descs",""],["keys","Defines the set of legal keys that can be used in queries."]],"trait":[["Key","The `Key` trait controls what types can legally be used as the key for a query."]]};
