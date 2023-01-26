@@ -1,1 +1,0 @@
-window.SIDEBAR_ITEMS = {"trait":[["ChildExt",""],["CommandExt","Windows-specific extensions to the [`process::Command`] builder."],["ExitCodeExt","Windows-specific extensions to [`process::ExitCode`]."],["ExitStatusExt","Windows-specific extensions to [`process::ExitStatus`]."]]};
